@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=breeze.du@gmail.com
+#SBATCH -c 16
+#SBATCH --mem=200G
+#SBATCH --ntasks=16
+#SBATCH --job-name=100GenePoReg 
+#SBATCH -t 47:00:00
+
+module load R
+srun R CMD BATCH ./1113_PoissonRegression_AllGene2000ite.R
