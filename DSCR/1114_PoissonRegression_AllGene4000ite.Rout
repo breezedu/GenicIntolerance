@@ -1,0 +1,174 @@
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ## ShuaiQi's Project
+> ## Date 11-13-2015
+> ## Aim: Try All Genes
+> ## @ authors:
+> ## Data source:
+> ## Models:
+> ## Parameters:
+> 
+> 
+> ## Data source and copyright?
+> ## Read in table from local hard drive:
+> ## setup the working directory to where exon_level_process_v2.txt locates
+> 
+> ##########################################
+> ## Part One Read in the data
+> ## create the tables
+> ##########################################
+> 
+> 
+> table <- read.table("exon_level_process_v2.txt")
+> ## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+> # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
+> 
+> 
+> ## assign column names
+> colnames(table) <- c("chr", "gene", "dom", "subdom", "exon", "gene.dom", 
++              "gene.dom.subdom", 
++              "envarp",    # pass
++              "envarpf",   # pass functional
++              "envarpfr",  # pass functional rare
++              "emutr")     # mutation rate 
+> 
+> 
+> ## attract data from the original table??
+> table<-within(table,envarpfc<-envarpf-envarpfr)#y
+> 
+> table<-within(table,gene<-factor(gene))
+> 
+> table<-within(table,gene.dom<-factor(gene.dom))
+> 
+> table<-within(table,gene.dom.subdom<-factor(gene.dom.subdom))
+> 
+> 
+> 
+> ##
+> ## table<-table[1:100000,]
+> 
+> #for the use of counting number of gene
+> sumenvarp<-aggregate(table$envarp, by=list(Category=table$gene), FUN=sum)
+> 
+> sumenvarpfc<-aggregate(table$envarpfc, by=list(Category=table$gene), FUN=sum)[,2]
+> 
+> ## simplify table1
+> table1<-data.frame(cbind(sumenvarp,sumenvarpfc))
+> 
+> 
+> ## assign column names to table1
+> colnames(table1)<-c("gene","sumenvarp","sumenvarpfc")
+> 
+> 
+> 
+> #######################################################
+> ## Part Two
+> ## Call Stan to do the simutation
+> #######################################################
+> 
+> 
+> #install.packages("rstan")
+> 
+> library("rstan")
+Loading required package: Rcpp
+Loading required package: ggplot2
+rstan (Version 2.8.0, packaged: 2015-09-19 14:48:38 UTC, GitRev: 05c3d0058b6a)
+For execution on a local, multicore CPU with excess RAM we recommend calling
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+> 
+> rstan_options(auto_write = TRUE)
+> options(mc.cores = parallel::detectCores())
+> 
+> ##gene_code
+> 
+> 
+> 
+> ######################
+> # init the parameters
+> ######################
+> N<-dim(table)[1]
+> J<-dim(table1)[1]
+> gene<-as.numeric(table$gene)
+> genelevel<-length(unique(gene))
+> index<-match(gene, unique(gene)) 
+> M1_table<-list(N=N, J=J, y=table$envarpfc,
++ x=table$envarp,gene=index)
+> 
+> 
+> ## fit rstan()
+> 
+> ## fit the model
+> fit0 <- stan(file = "possion.gene.rstan .stan")
+Error : variable does not exist; processing stage=data initialization; variable name=x; base type=vector_d
+failed to create the sampler; sampling not done
+> 
+> ## fit the model with data
+> fit1 <- stan(fit=fit0, data = M1_table, 
++ 		warmup = 400,
++ 		iter = 4000, 
++ 		chains=4)
+starting worker pid=4116 on localhost:11382 at 16:50:51.913
+starting worker pid=4125 on localhost:11382 at 16:50:52.230
+starting worker pid=4134 on localhost:11382 at 16:50:52.545
+starting worker pid=4143 on localhost:11382 at 16:50:52.861
+
+SAMPLING FOR MODEL 'possion.gene' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'possion.gene' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'possion.gene' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'possion.gene' NOW (CHAIN 4).
+
+Chain 4, Iteration:    1 / 4000 [  0%]  (Warmup)
+Chain 4, Iteration:  400 / 4000 [ 10%]  (Warmup)
+Chain 4, Iteration:  401 / 4000 [ 10%]  (Sampling)
+Chain 4, Iteration:  800 / 4000 [ 20%]  (Sampling)
+Chain 4, Iteration: 1200 / 4000 [ 30%]  (Sampling)
+Chain 2, Iteration:    1 / 4000 [  0%]  (Warmup)
+Chain 4, Iteration: 1600 / 4000 [ 40%]  (Sampling)
+Chain 1, Iteration:    1 / 4000 [  0%]  (Warmup)
+Chain 4, Iteration: 2000 / 4000 [ 50%]  (Sampling)
+Chain 4, Iteration: 2400 / 4000 [ 60%]  (Sampling)
+Chain 4, Iteration: 2800 / 4000 [ 70%]  (Sampling)
+Chain 4, Iteration: 3200 / 4000 [ 80%]  (Sampling)
+Chain 4, Iteration: 3600 / 4000 [ 90%]  (Sampling)
+Chain 4, Iteration: 4000 / 4000 [100%]  (Sampling)
+#  Elapsed Time: 192.73 seconds (Warm-up)
+#                1319.53 seconds (Sampling)
+#                1512.26 seconds (Total)
+
+
+Chain 3, Iteration:    1 / 4000 [  0%]  (Warmup)
+Chain 2, Iteration:  400 / 4000 [ 10%]  (Warmup)
+Chain 2, Iteration:  401 / 4000 [ 10%]  (Sampling)
+Chain 1, Iteration:  400 / 4000 [ 10%]  (Warmup)
+Chain 1, Iteration:  401 / 4000 [ 10%]  (Sampling)
+Chain 3, Iteration:  400 / 4000 [ 10%]  (Warmup)
+Chain 3, Iteration:  401 / 4000 [ 10%]  (Sampling)
+Chain 2, Iteration:  800 / 4000 [ 20%]  (Sampling)
+Chain 1, Iteration:  800 / 4000 [ 20%]  (Sampling)
+Chain 3, Iteration:  800 / 4000 [ 20%]  (Sampling)
+Chain 2, Iteration: 1200 / 4000 [ 30%]  (Sampling)
+Chain 1, Iteration: 1200 / 4000 [ 30%]  (Sampling)
+Chain 3, Iteration: 1200 / 4000 [ 30%]  (Sampling)
