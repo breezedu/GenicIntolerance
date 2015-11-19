@@ -115,6 +115,10 @@ traceplot(fit1,pars=c("a","beta"))
 traceplot(fit1, pars=c("beta", "beta"))
 dev.off()
 
+
+## stop snowfall package
+sfStop()
+
 ##################
 ## END 
 ##################
