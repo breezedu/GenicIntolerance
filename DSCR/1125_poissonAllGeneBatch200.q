@@ -2,7 +2,7 @@
 
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=jeff.du@duke.edu
-#SBATCH -c 32
+#SBATCH -c 16
 #SBATCH --mem-per-cpu=8G
 #SBATCH --ntasks=4
 #SBATCH --job-name=AllGenePoReg 
