@@ -101,12 +101,12 @@ fit0 <- stan(file = "/home/jeffdu/PoissonReg/possion.gene.rstan .stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-		warmup = 20,
-		iter = 200, 
+		warmup = 400,
+		iter = 4000, 
 		chains=4)
 
 
-## fit1 <- stan(model_code = gene_code, data=M1_table, iter=200, chains=4)
+## fit1 <- stan(model_code = gene_code, data=M1_table, iter=4000, chains=4)
 
 print(fit1)
 
@@ -115,10 +115,10 @@ print(fit1, "a")
 print (fit1, "beta")
 answer1<-extract(fit1, permuted = TRUE)
 effect<-answer1$a
-write.table(effect, "1124_Allgene_effectstan.txt", sep="\t")
+write.table(effect, "1115_Allgene_effectstan.txt", sep="\t")
 
 #check convergence 
-pdf("1124_Allgene_traceplot.pdf")
+pdf("1115_Allgene_traceplot.pdf")
 traceplot(fit1,pars=c("a","beta"))
 traceplot(fit1, pars=c("beta", "beta"))
 dev.off()
