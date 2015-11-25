@@ -103,17 +103,19 @@ fit1 <- stan(fit=fit0, data = M1_table,
 ## fit1 <- stan(model_code = gene_code, data=M1_table, iter=200, chains=4)
 
 print(fit1)
+write.table(fit1, "1125_fit1_Allgene200ite.txt", sep="\t")
+
 
 ##
 print(fit1, "a")
 print (fit1, "beta")
 answer1<-extract(fit1, permuted = TRUE)
 effect<-answer1$a
-write.table(effect, "1124_Allgene_effectstan200.txt", sep="\t")
+write.table(effect, "1125_Allgene_effectstan200.txt", sep="\t")
 
 
 #check convergence 
-pdf("1124_Allgene_traceplot200.pdf")
+pdf("1125_Allgene_traceplot200.pdf")
 ##traceplot(fit1,pars=c("a","beta"))
 traceplot(fit1, pars=c("beta", "beta"))
 dev.off()
