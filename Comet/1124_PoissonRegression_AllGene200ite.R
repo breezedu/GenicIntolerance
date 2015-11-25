@@ -115,10 +115,10 @@ print(fit1, "a")
 print (fit1, "beta")
 answer1<-extract(fit1, permuted = TRUE)
 effect<-answer1$a
-write.table(effect, "1123_Allgene_effectstan.txt", sep="\t")
+write.table(effect, "1115_Allgene_effectstan.txt", sep="\t")
 
 #check convergence 
-pdf("1123_Allgene_traceplot.pdf")
+pdf("1115_Allgene_traceplot.pdf")
 traceplot(fit1,pars=c("a","beta"))
 traceplot(fit1, pars=c("beta", "beta"))
 dev.off()
