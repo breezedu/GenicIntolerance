@@ -19,7 +19,7 @@ plt.style.use('ggplot')
 np.random.seed(1234)
 
 #import matplotlib
-#import matplotlib.pyplot
+import matplotlib.pyplot as mp
 
 
 ############################################################
