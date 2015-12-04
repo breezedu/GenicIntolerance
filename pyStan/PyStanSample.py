@@ -1,6 +1,8 @@
+import matplotlib
+matplotlib.use('Agg')
 import pystan
 import numpy as np
-from pystan.external.pymc.plots import traceplot
+#from pystan.external.pymc.plots import traceplot
 import matplotlib.pyplot as mp
 
 #import matplotlib
@@ -42,9 +44,19 @@ np.mean(eta, axis=0)
 
 # if matplotlib is installed (optional, not required), a visual summary and
 # traceplot are available
+
+print("plot figure")
+
 fit.plot()
+mp.savefig("StanPlot.png")
+
+#mp.figure(figsize=(8,6))
 #mp.plot(fit)
-mp.show()
+#mp.savefig('fit.png')
+#mp.close()
+
+#mp.plot(fit)
+#mp.show()
 
 #traceplot(fit)
 
