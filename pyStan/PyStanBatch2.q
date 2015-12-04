@@ -3,7 +3,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=jeff.du@duke.edu
 #SBATCH -c 4
-#SBATCH --mem=20G
+#SBATCH --mem=32G
 #SBATCH --ntasks=1
 #SBATCH --job-name=PyStanSample
 
