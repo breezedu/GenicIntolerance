@@ -14,7 +14,7 @@ data {
     int<lower=0> N; // number of gene level
     int<lower=1, upper=J> gene[N]; // number of obs
 
-    row_vector[N] x[J]; x// estimated treatment effects
+    row_vector[N] x[J]; // estimated treatment effects
     int<lower=0> sigma[N]; // s.e. of effect estimates
 }
 
