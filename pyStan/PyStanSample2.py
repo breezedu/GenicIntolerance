@@ -1,16 +1,25 @@
+from __future__ import division
 import matplotlib
 matplotlib.use('Agg')
+
+
+import os
+import sys
+import glob
+
+
 import pystan
 import numpy as np
 #from pystan.external.pymc.plots import traceplot
-import matplotlib.pyplot as mp
+import matplotlib.pyplot as plt
 import pandas as pd
+
+plt.style.use('ggplot')
+
+np.random.seed(1234)
 
 #import matplotlib
 #import matplotlib.pyplot
-
-import pandas.rpy.common as com
-
 
 
 ############################################################
@@ -18,7 +27,7 @@ import pandas.rpy.common as com
 print("\n\n the second part, Log data")
 
 # observed data
-df = pd.read_csv('HtWt.csv')
+df = pd.read_csv('HtWt.csv', error_bad_lines=False)
 df.head()
 
 log_reg_code = """
@@ -57,8 +66,8 @@ fit_log = pystan.stan(model_code=log_reg_code, data=log_reg_dat, iter=2000, chai
 
 print(fit_log)
 
-eta = fit_log.extract(permuted=True)['eta']
-np.mean(eta, axis=0)
+#eta = fit_log.extract(permuted=True)['eta']
+#np.mean(eta, axis=0)
 
 # if matplotlib is installed (optional, not required), a visual summary and
 # traceplot are available
