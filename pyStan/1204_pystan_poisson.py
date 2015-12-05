@@ -43,13 +43,25 @@ model {
 }
 """
 
+######################
+# init the parameters
+######################
+N<-dim(table)[1]
+J<-dim(table1)[1]
+gene<-as.numeric(table$gene)
+genelevel<-length(unique(gene))
+index<-match(gene, unique(gene)) 
+M1_table<-list(N=N, J=J, y=table$envarpfc,
+x=table$envarp,gene=index)
+################################################
+
 
 ## Have to read data from txt document:
-schools_dat = {'J': 8,
+exon_dat = {'J': 8,
                'y': [28,  8, -3,  7, -1,  1, 18, 12],
                'sigma': [15, 10, 16, 11,  9, 11, 10, 18]}
 
-fit = pystan.stan(model_code=schools_code, data=schools_dat,
+fit = pystan.stan(model_code=stan_code, data=exon_dat,
                   iter=1000, chains=4)
 
 print(fit)
