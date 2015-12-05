@@ -69,10 +69,10 @@ exon_dat = {
 	'J': len(table),
 	'N': len(table1),
 	'gene': table.gene
-	'genelevel':len(unique(gene))
-	'index': match(gene, unique(gene))
-	'M1_table': list(N=N, J=J, y = table.envarpfc,
-	'x': table.envarp, gene=index)
+	'genelevel':len(unique(gene))        	## what does unique(gene) mean here?
+	'index': match(gene, unique(gene))	## something wrong here
+	'M1_table': list(N=N, J=J, y = table.envarpfc,	##
+	'x': table.envarp, gene=index)          ###
 
 	}
 
