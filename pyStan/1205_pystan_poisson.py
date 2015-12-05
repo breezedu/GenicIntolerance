@@ -64,15 +64,21 @@ model {
 table = pd.read_csv('exon_table.csv')
 table1 = pd.read_csv('exon_table1.csv')
 
+## get unique list of gene:
+geneList = table.gene
+uniGene = set(geneList)
+
 exon_dat = {
 	
 	'J': len(table),
 	'N': len(table1),
-	'gene': table.gene
-	'genelevel':len(unique(gene))        	## what does unique(gene) mean here?
-	'index': match(gene, unique(gene))	## something wrong here
-	'M1_table': list(N=N, J=J, y = table.envarpfc,	##
-	'x': table.envarp, gene=index)          ###
+	'gene': table.gene,
+	
+	'genelevel': len(uniGene),
+	     	
+	'index': match(gene, uniGene),	### match is not defined here
+
+	'M1_table': list(N=N, J=J, y = table.envarpfc, x= table.envarp, gene=index),          ###	
 
 	}
 
