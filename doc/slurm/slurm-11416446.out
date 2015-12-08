@@ -1,0 +1,21 @@
+
+
+ the second part, Log data
+Traceback (most recent call last):
+  File "PyStanSample2.py", line 21, in <module>
+    df = pd.read_csv('HtWt.csv')
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pandas-0.17.1_28.g8ec8487-py2.7-linux-x86_64.egg/pandas/io/parsers.py", line 498, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pandas-0.17.1_28.g8ec8487-py2.7-linux-x86_64.egg/pandas/io/parsers.py", line 285, in _read
+    return parser.read()
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pandas-0.17.1_28.g8ec8487-py2.7-linux-x86_64.egg/pandas/io/parsers.py", line 747, in read
+    ret = self._engine.read(nrows)
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pandas-0.17.1_28.g8ec8487-py2.7-linux-x86_64.egg/pandas/io/parsers.py", line 1197, in read
+    data = self._reader.read(nrows)
+  File "pandas/parser.pyx", line 766, in pandas.parser.TextReader.read (pandas/parser.c:7988)
+  File "pandas/parser.pyx", line 788, in pandas.parser.TextReader._read_low_memory (pandas/parser.c:8244)
+  File "pandas/parser.pyx", line 842, in pandas.parser.TextReader._read_rows (pandas/parser.c:8970)
+  File "pandas/parser.pyx", line 829, in pandas.parser.TextReader._tokenize_rows (pandas/parser.c:8838)
+  File "pandas/parser.pyx", line 1833, in pandas.parser.raise_parser_error (pandas/parser.c:22649)
+pandas.parser.CParserError: Error tokenizing data. C error: Expected 1 fields in line 41, saw 3
+

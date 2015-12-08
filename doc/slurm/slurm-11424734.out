@@ -1,0 +1,34 @@
+sys:1: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
+Traceback (most recent call last):
+  File "1206_pystan_poisson.py", line 101, in <module>
+    iter=1000, chains=4)
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pystan/api.py", line 368, in stan
+    verbose=verbose)
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pystan/model.py", line 210, in __init__
+    obfuscate_model_name=obfuscate_model_name)
+  File "/dscrhome/gd44/.local/lib/python2.7/site-packages/pystan/api.py", line 129, in stanc
+    raise ValueError(error_msg)
+ValueError: Failed to parse Stan model 'anon_model_365b51400c8599fc9e9b6462384f1eaf'. Error message:
+SYNTAX ERROR, MESSAGE(S) FROM PARSER:
+
+Illegal statement beginning with non-void expression parsed as
+  epsilon[i]
+Not a legal assignment, sampling, or function statement.  Note that
+  * Assignment statements only allow variables (with optional indexes) on the left;
+    if you see an outer function logical_lt (<) with negated (-) second argument,
+    it indicates an assignment statement A <- B with illegal left
+    side A parsed as expression (A < (-B)).
+  * Sampling statements allow arbitrary value-denoting expressions on the left.
+  * Functions used as statements must be declared to have void returns
+
+
+ERROR at line 22
+
+ 20:        vector[N] epsilon[J];
+ 21:        for (i in 1:N)
+ 22:        	epsilon[i] = sigma_epsilon * epsilon_raw[i];
+               ^
+ 23:    
+
+PARSER EXPECTED: <statement>
+
