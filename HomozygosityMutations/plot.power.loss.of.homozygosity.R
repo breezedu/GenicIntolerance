@@ -23,3 +23,7 @@ lines(1/bta,pwr.hom,lwd=2)
 
 ## add figure legend
 legend(4,.45,c("Homogeneous","Stratified"),fill=c("black","red"))
+
+
+## one of the output plot figure could be found in the github repository:
+## https://github.com/breezedu/GenicIntolerance/blob/master/HomozygosityMutations/Rplot_loss_of_homozygosity.png
