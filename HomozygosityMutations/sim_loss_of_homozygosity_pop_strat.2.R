@@ -2,7 +2,7 @@
 ##
 ## Homozygosity Project
 ## Date 12-29-2015
-## Aim: Simulation Loss of Homozygosity Population Strat 1
+## Aim: Simulation Loss of Homozygosity Population Strat 2
 ## @ authors: Andrew Allen 
 ## @ student: Jeff Du
 ## Data source: 
