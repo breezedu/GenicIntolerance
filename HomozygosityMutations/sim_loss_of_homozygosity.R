@@ -1,8 +1,27 @@
-nsites<-10 #number of polymorphic qualifying sites in gene
-n<-5000 #sample size
-p.upper<-0.01 #upper bound on qualifying variants
-b.v<-.95 # baseline viability (probability of being viable give zero or one affected gene copies)
-bta<-1/10# relative risk of viability given 2 affected copies versus baseline
+##
+##
+## Homozygosity Project
+## Date 12-29-2015
+## Aim: Simulation Loss of Homozygosity Genes
+## @ authors: Andrew Allen 
+## @ student: Jeff Du
+## Data source: 
+## Models:  Poisson
+## Parameters: 
+
+
+##########################################
+## Part One Read in the data
+## create the tables
+##########################################
+
+
+
+nsites<-10              #number of polymorphic qualifying sites in gene
+n<-5000                 #sample size
+p.upper<-0.01           #upper bound on qualifying variants
+b.v<-.95                # baseline viability (probability of being viable give zero or one affected gene copies)
+bta<-1/10               # relative risk of viability given 2 affected copies versus baseline
 nsim<-100
 s<-c(rep(0,nsim))
 
