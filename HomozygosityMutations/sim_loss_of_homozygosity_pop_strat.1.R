@@ -1,3 +1,14 @@
+##
+##
+## Homozygosity Project
+## Date 12-29-2015
+## Aim: Simulation Loss of Homozygosity Population Strat 1
+## @ authors: Andrew Allen 
+## @ student: Jeff Du
+## Data source: 
+## Models:  Poisson
+## Parameters: 
+
 nsites<-5 #number of polymorphic qualifying sites in gene
 np1<-1000 #sample size popn1
 np2<-1000 #sample size popn2
