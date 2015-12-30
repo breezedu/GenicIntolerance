@@ -66,6 +66,7 @@ bigN<-function(digits){
 	return(bigN)
 }
 
+
 mu<-0
 for(i in 1:bigN(nsites)){
 	g.temp<-baseB(i,nsites,3)
@@ -81,46 +82,55 @@ for(i in 1:bigN(nsites)){
 	mu<-mu+rho*pi2.g.temp
 }
 
+
 nnz<-0
+
+
 for(j in 1:nsim){
 	print(j)
-#simulate data under alternative
-count<-1
-while(count<=n){
+  
+  
+  #simulate data under alternative
+  count<-1
+  while(count<=n){
 
-	for(c in 1:2){
-		for(l in 1:nsites){
-			g[count,l,c]<-rbinom(1,1,p[l])
-		}
-	}
+	  for(c in 1:2){
+		  for(l in 1:nsites){
+		    g[count,l,c]<-rbinom(1,1,p[l])
+			  
+		    } #end for(l in 1:nsites)
+	  } #end for(c in 1:2)
 
-	temp1<-sum(g[count,,1])
-	temp2<-sum(g[count,,2])
+	  temp1<-sum(g[count,,1])
+	  temp2<-sum(g[count,,2])
 
-	x[count]<-(temp1>0)+(temp2>0)
-	if(x[count]<2){p.v<-b.v}
-	else{p.v<-b.v*bta}
-	v[count]<-rbinom(1,1,p.v)
-	if(v[count]==1){count<-count+1}
+	  x[count]<-(temp1>0)+(temp2>0)
+	  if(x[count]<2){p.v<-b.v}
+	  else{p.v<-b.v*bta}
+	  v[count]<-rbinom(1,1,p.v)
+	  if(v[count]==1){count<-count+1}
 
-}
+  } #end while
 
-g.obs<-g[,,1]+g[,,2]
+  g.obs<-g[,,1]+g[,,2]
 
-for(i in 1:n){
-	n1[i]<-sum(g.obs[i,]==1)
-	n2[i]<-sum(g.obs[i,]==2)
-	if(n1[i]<=1 & n2[i]==0){pi2.g[i]<-0}
-	if(n1[i]>1 & n2[i]==0){pi2.g[i]<-1-(1/2)^(n1[i]-1)}
-	if(n2[i]>0){pi2.g[i]<-1}
-}
 
-s.j<-pi2.g-mu
-if(var(s.j)!=0){
-s[j]<-sum(s.j)/sqrt(n*var(s.j))
-nnz<-nnz+1
-}
+  for(i in 1:n){
+	  n1[i]<-sum(g.obs[i,]==1)
+	  n2[i]<-sum(g.obs[i,]==2)
+	  if(n1[i]<=1 & n2[i]==0){pi2.g[i]<-0}
+	  if(n1[i]>1 & n2[i]==0){pi2.g[i]<-1-(1/2)^(n1[i]-1)}
+	  if(n2[i]>0){pi2.g[i]<-1}
+  } #end for(i in 1:n)
 
-}
+
+  s.j<-pi2.g-mu
+  if(var(s.j)!=0){
+    s[j]<-sum(s.j)/sqrt(n*var(s.j))
+    nnz<-nnz+1
+  } #end if(var(s.j)!=0)
+
+} #end for(j in 1:nsim){
+
 sum(s<qnorm(.05))/nsim
 
