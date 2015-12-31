@@ -42,8 +42,8 @@ table<-within(table,gene.dom.subdom<-factor(gene.dom.subdom))
 
 
 
-##
-## table<-table[1:100000,]
+## subset the table/genes
+## table<-table[1:100000,]    ##when we do not run this line, we run the whole genes
 
 #for the use of counting number of gene
 sumenvarp<-aggregate(table$envarp, by=list(Category=table$gene), FUN=sum)
@@ -96,14 +96,14 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-				iter = 4000, 
+				iter = 10000, 
 				chains=4)
 
 
 ## fit1 <- stan(model_code = gene_code, data=M1_table, iter=200, chains=4)
 
 print(fit1, "a")
-##write.table(fit1, "1125_fit1_Allgene200ite.txt", sep="\t")
+##write.table(fit1, "1230_fit1_Allgene10K_ite.txt", sep="\t")
 
 print(fit1, "beta")
 
@@ -114,11 +114,11 @@ print(fit1, "beta")
 
 answer1<-extract(fit1, permuted = TRUE)
 effect<-answer1$a
-write.table(effect, "1230_Allgene_effectstan4000.txt", sep="\t")
+write.table(effect, "1230_Allgene_effectstan110K.txt", sep="\t")
 
 
 ## check convergence 
-pdf("1230_Allgene_traceplot200.pdf")
+pdf("1230_Allgene_traceplot10K.pdf")
 traceplot(fit1,pars=c("a","beta"))
 traceplot(fit1, pars=c("beta", "beta"))
 dev.off()
