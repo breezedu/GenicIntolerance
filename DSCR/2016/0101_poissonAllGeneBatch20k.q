@@ -7,4 +7,4 @@
 #SBATCH --ntasks=4
 #SBATCH --job-name=AllGenePoReg1kIteration
 
-R CMD BATCH ./0101_PoissonRegression_AllG1000ite.R
+R CMD BATCH ./0101_PoissonRegression_AllG20Kite.R
