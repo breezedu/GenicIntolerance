@@ -101,7 +101,7 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-				iter = 1000, 
+				iter = 20000, 
 				chains=4)
 
 
