@@ -106,7 +106,7 @@ fit1 <- stan(fit=fit0, data = M1_table,
 
 
 print(fit1, "a")
-##write.table(fit1, "1231_fit1_Allgene20K_ite.txt", sep="\t")
+##write.table(fit1, "0101_fit1_Allgene1K_ite.txt", sep="\t")
 
 print(fit1, "beta")
 
@@ -114,17 +114,17 @@ print(fit1, "beta")
 
 answer1 <- extract(fit1, permuted = TRUE)
 effect <- answer1$a
-write.table(effect, "1231_Allgene_effectstan20K.txt", sep="\t")
+write.table(effect, "0101_Allgene_effectstan1K.txt", sep="\t")
 
 
 ## check convergence 
-pdf("1231_Allgene_traceplot20K.pdf")
+pdf("0101_Allgene_traceplot1K.pdf")
 
 
 traceplot(fit1,"beta")
 plot(density(answer1$beta), xlab="beta", main="distribution of beta")
 
-traceplot(fit1, "a", nrow=2)
+traceplot(fit1, "a", ncol=2)
 dev.off()
 
 ##################
