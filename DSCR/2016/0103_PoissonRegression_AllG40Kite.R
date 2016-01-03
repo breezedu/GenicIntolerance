@@ -1,6 +1,6 @@
 ############################################
 ## ShuaiQi's Project
-## Date 	12-31-2015
+## Date 	02-02-2016
 ## Aim: 	Try All Genes
 ## @ authors: 	SQ
 ## Data source: /dscrhome/gd44/SQProject/RStan/2016/exon_level_process_v2.txt
@@ -19,9 +19,9 @@
 ##########################################
 
 
-## the exon table is in the same directory as this R script
 table <- read.table("exon_level_process_v2.txt")
-
+## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+# table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
 ## assign column names
@@ -69,9 +69,8 @@ colnames(table1)<-c("gene","sumenvarp","sumenvarpfc")
 #######################################################
 
 
-## install.packages("rstan")
+#install.packages("rstan")
 
-## load rstan package
 library("rstan")
 
 ## the following two lines would help the parallel computing
@@ -102,12 +101,12 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-				iter = 50000, 
+				iter = 40000, 
 				chains=4)
 
 
 print(fit1, "a")
-##write.table(fit1, "0102_fit1_Allgene50K_ite.txt", sep="\t")
+##write.table(fit1, "0102_fit1_Allgene40K_ite.txt", sep="\t")
 
 print(fit1, "beta")
 
@@ -115,11 +114,11 @@ print(fit1, "beta")
 
 answer1 <- extract(fit1, permuted = TRUE)
 effect <- answer1$a
-write.table(effect, "0102_Allgene_effectstan50K.txt", sep="\t")
+write.table(effect, "0102_Allgene_effectstan40K.txt", sep="\t")
 
 
 ## check convergence 
-pdf("0102_Allgene_traceplot50K.pdf")
+pdf("0102_Allgene_traceplot40K.pdf")
 
 
 traceplot(fit1,"beta")
