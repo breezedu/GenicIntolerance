@@ -1,0 +1,152 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ############################################
+> ## ShuaiQi's Project
+> ## Date 	01-04-2016
+> ## Aim: 	Try All Genes
+> ## @ authors: 	SQ
+> ## Data source: /dscrhome/gd44/SQProject/RStan/2016/exon_level_process_v2.txt
+> ## Models: 	Bayesian Stan
+> ## Parameters:	
+> ## Outputs: 	
+> 
+> 
+> ## Data source and copyright?
+> ## Read in table from local hard drive:
+> ## setup the working directory to where exon_level_process_v2.txt locates
+> 
+> ##########################################
+> ## Part One Read in the data
+> ## create the tables
+> ##########################################
+> 
+> 
+> table <- read.table("exon_level_process_v2.txt")
+> ## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+> # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
+> 
+> 
+> ## assign column names
+> colnames(table) <- c("chr", "gene", "dom", "subdom", "exon", "gene.dom", 
++              "gene.dom.subdom", 
++              "envarp",    # pass
++              "envarpf",   # pass functional
++              "envarpfr",  # pass functional rare
++              "emutr")     # mutation rate 
+> 
+> 
+> ## attract data from the original table??
+> table<-within(table,envarpfc<-envarpf-envarpfr)#y
+> 
+> table<-within(table,gene<-factor(gene))
+> 
+> table<-within(table,gene.dom<-factor(gene.dom))
+> 
+> table<-within(table,gene.dom.subdom<-factor(gene.dom.subdom))
+> 
+> 
+> 
+> ## subset the table/genes
+> ## table<-table[1:100000,]    ##when we do not run this line, we run the whole genes
+> 
+> #for the use of counting number of gene
+> sumenvarp<-aggregate(table$envarp, by=list(Category=table$gene), FUN=sum)
+> 
+> sumenvarpfc<-aggregate(table$envarpfc, by=list(Category=table$gene), FUN=sum)[,2]
+> 
+> ## simplify table1
+> table1<-data.frame(cbind(sumenvarp,sumenvarpfc))
+> 
+> 
+> ## assign column names to table1
+> colnames(table1)<-c("gene","sumenvarp","sumenvarpfc")
+> 
+> 
+> 
+> 
+> 
+> #######################################################
+> ## Part Two
+> ## Call Stan to do the simutation
+> #######################################################
+> 
+> 
+> #install.packages("rstan")
+> 
+> library("rstan")
+Loading required package: Rcpp
+Loading required package: ggplot2
+rstan (Version 2.8.0, packaged: 2015-09-19 14:48:38 UTC, GitRev: 05c3d0058b6a)
+For execution on a local, multicore CPU with excess RAM we recommend calling
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+> 
+> ## the following two lines would help the parallel computing
+> rstan_options(auto_write = TRUE)
+> options(mc.cores = parallel::detectCores())
+> 
+> ##gene_code
+> 
+> 
+> 
+> ######################
+> # init the parameters
+> ######################
+> N<-dim(table)[1]
+> J<-dim(table1)[1]                       #number of genes in table1
+> gene<-as.numeric(table$gene)
+> genelevel<-length(unique(gene))
+> index<-match(gene, unique(gene)) 
+> 
+> M1_table<-list( J=J, y=table1$sumenvarpfc,
++                 x=table1$sumenvarp,gene=c(1:length(table1$sumenvarpfc)))
+> 
+> 
+> ## fit rstan()
+> 
+> ## fit the model
+> fit0 <- stan(file = "possion.simpgene.rstan.stan")
+Error : mismatch in dimension declared and found in context; processing stage=data initialization; variable name=gene; position=0; dims declared=(18596); dims found=(233740)
+failed to create the sampler; sampling not done
+> 
+> ## fit the model with data
+> fit1 <- stan(fit=fit0, data = M1_table, 
++ 				iter = 60000, 
++ 				chains=4)
+starting worker pid=1889 on localhost:11210 at 10:00:13.161
+starting worker pid=1898 on localhost:11210 at 10:00:13.323
+starting worker pid=1907 on localhost:11210 at 10:00:13.483
+starting worker pid=1916 on localhost:11210 at 10:00:13.643
+
+SAMPLING FOR MODEL 'possion.simpgene' NOW (CHAIN 1).
+
+SAMPLING FOR MODEL 'possion.simpgene' NOW (CHAIN 2).
+
+SAMPLING FOR MODEL 'possion.simpgene' NOW (CHAIN 3).
+
+SAMPLING FOR MODEL 'possion.simpgene' NOW (CHAIN 4).
+
+Chain 1, Iteration:     1 / 60000 [  0%]  (Warmup)
+Chain 2, Iteration:     1 / 60000 [  0%]  (Warmup)
+Chain 3, Iteration:     1 / 60000 [  0%]  (Warmup)
+Chain 4, Iteration:     1 / 60000 [  0%]  (Warmup)
+Chain 4, Iteration:  6000 / 60000 [ 10%]  (Warmup)

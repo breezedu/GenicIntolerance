@@ -1,6 +1,6 @@
 ############################################
 ## ShuaiQi's Project
-## Date 	02-02-2016
+## Date 	01-04-2016
 ## Aim: 	Try All Genes
 ## @ authors: 	SQ
 ## Data source: /dscrhome/gd44/SQProject/RStan/2016/exon_level_process_v2.txt
@@ -101,12 +101,12 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-				iter = 40000, 
+				iter = 60000, 
 				chains=4)
 
 
 print(fit1, "a")
-##write.table(fit1, "0102_fit1_Allgene40K_ite.txt", sep="\t")
+##write.table(fit1, "0104_fit1_Allgene60K_ite.txt", sep="\t")
 
 print(fit1, "beta")
 
@@ -114,7 +114,7 @@ print(fit1, "beta")
 
 answer1 <- extract(fit1, permuted = TRUE)
 effect <- answer1$a
-write.table(effect, "0102_Allgene_effectstan40K.txt", sep="\t")
+write.table(effect, "0104_Allgene_effectstan60K.txt", sep="\t")
 
 
 ## check convergence 
