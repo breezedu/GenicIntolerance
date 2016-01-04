@@ -1,6 +1,6 @@
 ############################################
 ## ShuaiQi's Project
-## Date 	02-02-2016
+## Date 	01-04-2016
 ## Aim: 	Try All Genes
 ## @ authors: 	SQ
 ## Data source: /dscrhome/gd44/SQProject/RStan/2016/exon_level_process_v2.txt
@@ -105,8 +105,8 @@ fit1 <- stan(fit=fit0, data = M1_table,
 				chains=4)
 
 
+## print fit1 
 print(fit1, "a")
-##write.table(fit1, "0102_fit1_Allgene40K_ite.txt", sep="\t")
 
 print(fit1, "beta")
 
@@ -114,11 +114,11 @@ print(fit1, "beta")
 
 answer1 <- extract(fit1, permuted = TRUE)
 effect <- answer1$a
-write.table(effect, "0102_Allgene_effectstan40K.txt", sep="\t")
+write.table(effect, "0104_Allgene_effectstan40K.txt", sep="\t")
 
 
 ## check convergence 
-pdf("0102_Allgene_traceplot40K.pdf")
+pdf("0104_Allgene_traceplot40K.pdf")
 
 
 traceplot(fit1,"beta")
