@@ -3,8 +3,8 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=jeff.du@duke.edu
 #SBATCH -c 12
-#SBATCH --mem-per-cpu=5G
-#SBATCH --ntasks=10
+#SBATCH --mem-per-cpu=8G
+#SBATCH --ntasks=4
 #SBATCH --job-name=AllGenePoReg100kIteration
 
-R CMD BATCH ./1229_PoissonRegression_AllGene100kite.R
+R CMD BATCH ./1230_PoissonRegression_AllG4000ite.R
