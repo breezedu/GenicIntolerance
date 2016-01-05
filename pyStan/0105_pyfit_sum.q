@@ -7,6 +7,6 @@
 #SBATCH --ntasks=1
 #SBATCH --job-name=PyStanSum
 
-/dscrhome/gd44/jeffapps/bin/python2.7 pyfitsumcode.py
+/dscrhome/gd44/jeffapps/bin/python2.7 dataset_for_simpystan.py
 
 #R CMD BATCH ./1205_PoissonRegression_1000Gene2000ite.R
