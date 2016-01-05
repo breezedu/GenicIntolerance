@@ -7,24 +7,30 @@ import pystan
 ##################################################################
 
 pyfit1code = """
+## data
 data{   				//get the data we have
-
-int <lower=0> J; 			//number of gene level 
-int <lower=1,upper=J> gene[J];
-vector[J] x;  				#x
-int <lower=0> y[J] ; 			//y
+	int <lower=0> J; 			//number of gene level 
+	int <lower=1,upper=J> gene[J];
+	vector[J] x;  				//x
+	int <lower=0> y[J] ; 			//y
 }
-parameters{ 				//specify the parameter we want to know 
-vector[J] a;  				//random intercept when gene is the level 
-real <lower=0> sigma_a;  		//variance of intercept
 
-real beta;    				//common slope;
+##parameters
+parameters{	 				//specify the parameter we want to know 
+	vector[J] a;  				//random intercept when gene is the level 
+	real <lower=0> sigma_a;  		//variance of intercept
+
+	real beta;    				//common slope;
 }
+
+## transformed parameters
 transformed parameters{ 		//specify the model we will use 
-vector[J] lambda;
-for (i in 1:J) 
-     lambda[i] <- beta*x[i]+a[gene[i]];	//specify the group
+	vector[J] lambda;
+	for (i in 1:J) 
+     		lambda[i] <- beta*x[i]+a[gene[i]];	//specify the group
 }
+
+## model
 model { 				//give the prior distribution
   beta ~ normal(0,10);
   a ~ normal(0, sigma_a);
@@ -36,16 +42,18 @@ model { 				//give the prior distribution
 ######################################
 ## data management
 ######################################
-data=np.genfromtxt("sumtable.txt", delimiter=',',skip_header=1, dtype=None, names=("chr","gene","sumenvarp","sumenvarpfc"  ))
+data=np.genfromtxt("sumtable.txt", delimiter=',',skip_header=0, dtype=None, names=("chr","gene","sumenvarp","sumenvarpfc"  ))
 gene=range(1,len(data)+1)
+
 x=data["sumenvarp"]
 y=data["sumenvarpfc"]
 N=len(data)
+
 M1_table={'J': N,
-               'X': x,
-               'Y': y,
-               'gene':gene
-               }
+          'X': x,
+          'Y': y,
+          'gene':gene
+          }
 
 
 #####################################
