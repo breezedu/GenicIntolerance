@@ -9,13 +9,13 @@
 ## Models:  Poisson
 ## Parameters: 
 
-nsites<-5 #number of polymorphic qualifying sites in gene
-np1<-1000 #sample size popn1
-np2<-1000 #sample size popn2
+nsites<-5         #number of polymorphic qualifying sites in gene
+np1<-1000         #sample size popn1
+np2<-1000         #sample size popn2
 n<-np1+np2
-p.upper<-0.05 #upper bound on qualifying variants
-b.v<-.95 # baseline viability (probability of being viable give zero or one affected gene copies)
-bta<-1# relative risk of viability given 2 affected copies versus baseline
+p.upper<-0.05     #upper bound on qualifying variants
+b.v<-.95          # baseline viability (probability of being viable give zero or one affected gene copies)
+bta<-1            # relative risk of viability given 2 affected copies versus baseline
 nsim<-1
 s<-c(rep(0,nsim))
 
@@ -34,7 +34,7 @@ p<-c(p1*np1/n,p2*np2/n)
 
 
 
-prob<-matrix(0,3,2*nsites) # site specific genotype probabilities
+prob<-matrix(0,3,2*nsites)      # site specific genotype probabilities
 for(i in 1:(2*nsites)){
 	prob[1,i]<-(1-p[i])^2
 	prob[2,i]<-2*p[i]*(1-p[i])
@@ -95,6 +95,7 @@ while(count<=np1){
 	x[count]<-(temp1>0)+(temp2>0)
 	if(x[count]<2){p.v<-b.v}
 	else{p.v<-b.v*bta}
+	
 	v[count]<-rbinom(1,1,p.v)
 	if(v[count]==1){count<-count+1}
 
@@ -135,5 +136,6 @@ s[j]<-sum(s.j)/sqrt(n*var(s.j))
 nnz<-nnz+1
 }
 
-}
+}     #end for in line 80
+
 sum(s<qnorm(.05))/nsim
