@@ -17,8 +17,8 @@
 ##########################################
 
 
-table <- read.table("exon_level_process_v2.txt")
-## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+##table <- read.table("exon_level_process_v2.txt")
+table <- read.table("D:/GitHub/exon_level_process_v2.txt")
 # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
@@ -95,12 +95,13 @@ fit0 <- stan(file = "possion.gene.rstan .stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-		warmup = 20,
-		iter = 200, 
+	
+		iter = 10000, 
 		chains=4)
 
 
-## fit1 <- stan(model_code = gene_code, data=M1_table, iter=200, chains=4)
+## 
+fit1 <- stan(model_code = gene_code, data=M1_table, iter=10000, chains=4)
 
 print(fit1)
 write.table(fit1, "1125_fit1_Allgene200ite.txt", sep="\t")

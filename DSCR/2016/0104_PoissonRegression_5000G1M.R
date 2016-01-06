@@ -20,7 +20,7 @@
 
 
 table <- read.table("exon_level_process_v2.txt")
-## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+table <- read.table("D:/GitHub/exon_level_process_v2.txt")
 # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
@@ -45,7 +45,7 @@ table<-within(table,gene.dom.subdom<-factor(gene.dom.subdom))
 
 
 ## subset the table/genes
-table<-table[1:5000,]    ##when we do not run this line, we run the whole genes
+table<-table[1:100,]    ##when we do not run this line, we run the whole genes
 
 #for the use of counting number of gene
 sumenvarp<-aggregate(table$envarp, by=list(Category=table$gene), FUN=sum)
