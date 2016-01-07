@@ -8,7 +8,7 @@ int <lower=0> y[J] ; #y
 parameters{ #specify the parameter we want to know 
 vector[J] a;  #random intercept when gene is the level 
 real <lower=0> sigma_a;  #variance of intercept
-real <lower=0> sigma_epsilon; #variance of dispersion
+
 real beta;    #common slope;
 }
 transformed parameters{ #specify the model we will use 
