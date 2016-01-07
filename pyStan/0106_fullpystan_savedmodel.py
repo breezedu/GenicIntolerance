@@ -74,11 +74,11 @@ data1=np.genfromtxt("sumtable.txt", delimiter=',',skip_header=1,
 
 
 ## parameters for stan model
-N=len(data)		//number of exons
-J=len(data1)		//number of genes
-x=data['envarp']	//x	the x-value in RVIS plot
-y=data["envarpfc"]	//y	the y-value in RVIS plot
-gene=data["index"]	//the index of genes
+N=len(data)		#number of exons
+J=len(data1)		#number of genes
+x=data['envarp']	#x	the x-value in RVIS plot
+y=data["envarpfc"]	#y	the y-value in RVIS plot
+gene=data["index"]	#the index of genes
 
 
 ## from the source data, we got arrays of x and y, they data type is string
