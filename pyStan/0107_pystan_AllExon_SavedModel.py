@@ -115,7 +115,7 @@ data1=np.genfromtxt("sumtable.txt", delimiter=',',skip_header=1,
 ## parameters for stan model
 N=len(data)		#number of exons
 J=len(data1)		#number of genes
-x=data['envarp']	#x	the list of variate sites in an exon
+x=data['envarp'] 	#x	the list of variate sites in an exon
 y=data["envarpfc"]	#y	the list of common functional variations in an exon
 gene=data["index"]	#the index of genes
 
