@@ -23,8 +23,8 @@
 ## J the number of exons; 
 ## N the number of genes; 
 ## gene[] a list of gene-series number;
-## x[] a list of x-value in RVIS; 
-## y[] a list of y-value in RVIS;
+## x[] a list of variate sites in an exon; 
+## y[] a list of common functional variations in an exon;
 ##
 ## Part 3, Data Management
 ## get all parameters for Stan Model: J, N, gene, x, y;
@@ -115,8 +115,8 @@ data1=np.genfromtxt("sumtable.txt", delimiter=',',skip_header=1,
 ## parameters for stan model
 N=len(data)		#number of exons
 J=len(data1)		#number of genes
-x=data['envarp']	#x	the x-value in RVIS plot
-y=data["envarpfc"]	#y	the y-value in RVIS plot
+x=data['envarp']	#x	the list of variate sites in an exon
+y=data["envarpfc"]	#y	the list of common functional variations in an exon
 gene=data["index"]	#the index of genes
 
 
@@ -132,6 +132,7 @@ y = y1
 ####################################################
 ## part four
 ## Mtable
+## N, x, y must match these in the pyfitfull
 ####################################################
 
 Mtable={	'N':N,'J': J,
