@@ -8,5 +8,3 @@
 #SBATCH --job-name=PyStanSample
 
 /dscrhome/gd44/jeffapps/bin/python2.7 PyStanSample.py
-
-#R CMD BATCH ./1113_PoissonRegression_1000Gene2000ite.R
