@@ -178,7 +178,7 @@ new_model = load('pyfitfull_model')
 print("\n fit pystan model")
 
 ## fit=pystan.stan(model_code="pystancode.stan", data=Mtable, iter=1000, chains=4)
-fit = new_model.sampling(Mtable, iter = 10000, chains=4)
+fit = new_model.sampling(Mtable, iter = 200, chains=4)
 
 ####################################################
 #extract the result
