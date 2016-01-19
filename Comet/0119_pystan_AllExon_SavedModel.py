@@ -178,14 +178,14 @@ new_model = load('pyfitfull_model')
 print("\n fit pystan model")
 
 ## fit=pystan.stan(model_code="pystancode.stan", data=Mtable, iter=1000, chains=4)
-fit = new_model.sampling(Mtable, iter = 200, chains=4)
+fit = new_model.sampling(Mtable, warmup= 2000, iter = 2500, chains=4)
 
 ####################################################
 #extract the result
-result=fit.extract(permuted=True) 
-a=result["a"]
-beta=result["beta"]
-sigma_a=result["sigma_a"]
+#result=fit.extract(permuted=True) 
+#a=result["a"]
+#beta=result["beta"]
+#sigma_a=result["sigma_a"]
 print(fit)
 
 
@@ -197,7 +197,7 @@ print(fit)
 print("plot fit figure")
 
 fit.plot()
-mp.savefig("0116_PyStan_Exon_10K_Plot.png")
+mp.savefig("0119_PyStan_Exon_Plot.png")
 
 
 ####################################################
