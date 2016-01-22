@@ -73,8 +73,8 @@ data {
     int<lower=0> J; 			// number of obs
     int<lower=0> N; 			// number of gene level
     int<lower=1, upper=J> gene[N]; 	// number of obs
-    int<lower=0> x[N]; 			// estimated treatment effects
-    int<lower=0> y[N]; 			// s.e. of effect estimates
+    float<lower=0> x[N]; 			// estimated treatment effects
+    float<lower=0> y[N]; 			// s.e. of effect estimates
 }
 parameters {
     vector[J] a;
