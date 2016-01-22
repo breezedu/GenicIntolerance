@@ -122,11 +122,11 @@ gene=data["index"]	#the index of genes
 
 ## from the source data, we got arrays of x and y, they data type is string
 ## we have to transform x and y from string array to list of integers
-x1 = list(map(int, x))
-y1 = list(map(int, y))
+x = list(map(float, x))
+y = list(map(float, y))
 
-x = x1
-y = y1
+# x = x1
+# y = y1
 
 
 ####################################################
@@ -178,7 +178,7 @@ new_model = load('pyfitfull_model')
 print("\n fit pystan model")
 
 ## fit=pystan.stan(model_code="pystancode.stan", data=Mtable, iter=1000, chains=4)
-fit = new_model.sampling(Mtable, iter = 1000, warmup= 800, thin=2, chains=4)
+fit = new_model.sampling(Mtable, iter = 200, warmup= 100, chains=4)
 
 ####################################################
 #extract the result
@@ -197,7 +197,7 @@ print(fit)
 print("plot fit figure")
 
 fit.plot()
-mp.savefig("0121_PyStan_Exon_Plot.png")
+mp.savefig("0122_PyStan_Exon_Plot.png")
 
 
 ####################################################

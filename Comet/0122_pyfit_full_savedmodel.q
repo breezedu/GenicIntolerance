@@ -11,4 +11,4 @@
 #SBATCH -t 48:00:00
 
 module load python
-python 0121_pystan_AllExon_SavedModel.py
+python 0122_pystan_AllExon_SavedModel.py
