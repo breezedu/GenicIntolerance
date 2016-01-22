@@ -2,13 +2,13 @@
 
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=breeze.du@gmail.com
-#SBATCH -A TG-DMS160001
+#SBATCH -A TG-BIO160003
 #SBATCH -p compute
-#SBATCH -c 24
+#SBATCH -c 16
 #SBATCH --mem-per-cpu=5G
-#SBATCH --ntasks=10
+#SBATCH --ntasks=4
 #SBATCH --job-name=PyStanSavedModel
-#SBATCH -t 46:00:00
+#SBATCH -t 48:00:00
 
 module load python
 python 0121_pystan_AllExon_SavedModel.py
