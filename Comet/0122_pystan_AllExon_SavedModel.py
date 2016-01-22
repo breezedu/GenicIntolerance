@@ -73,8 +73,8 @@ data {
     int<lower=0> J; 			// number of obs
     int<lower=0> N; 			// number of gene level
     int<lower=1, upper=J> gene[N]; 	// number of obs
-    float<lower=0> x[N]; 			// estimated treatment effects
-    float<lower=0> y[N]; 			// s.e. of effect estimates
+    int<lower=0> x[N]; 			// estimated treatment effects
+    int<lower=0> y[N]; 			// s.e. of effect estimates
 }
 parameters {
     vector[J] a;
@@ -122,8 +122,8 @@ gene=data["index"]	#the index of genes
 
 ## from the source data, we got arrays of x and y, they data type is string
 ## we have to transform x and y from string array to list of integers
-x = list(map(float, x))
-y = list(map(float, y))
+x = list(map(int, x))
+y = list(map(int, y))
 
 # x = x1
 # y = y1
@@ -182,10 +182,11 @@ fit = new_model.sampling(Mtable, iter = 200, warmup= 100, chains=4)
 
 ####################################################
 #extract the result
-#result=fit.extract(permuted=True) 
-#a=result["a"]
-#beta=result["beta"]
-#sigma_a=result["sigma_a"]
+result=fit.extract(permuted=True) 
+a=result["a"]
+beta=result["beta"]
+sigma_a=result["sigma_a"]
+
 print(fit)
 
 
