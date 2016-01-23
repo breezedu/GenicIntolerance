@@ -178,7 +178,7 @@ new_model = load('pyfitfull_model')
 print("\n fit pystan model")
 
 ## fit=pystan.stan(model_code="pystancode.stan", data=Mtable, iter=1000, chains=4)
-fit = new_model.sampling(Mtable, iter = 1000, warmup= 800, thin=2, chains=4)
+fit = new_model.sampling(Mtable, iter = 3000, warmup= 2800, thin=2, chains=4)
 
 ####################################################
 #extract the result
@@ -197,7 +197,7 @@ print(fit)
 print("plot fit figure")
 
 fit.plot()
-mp.savefig("0121_PyStan_Exon_Plot.png")
+mp.savefig("0123_2nd_PyStan_Exon_Plot.png")
 
 
 ####################################################
