@@ -7,4 +7,4 @@
 #SBATCH --nodes=8
 #SBATCH --job-name=PyStanSavedModel
 
-/dscrhome/gd44/jeffapps/bin/python2.7 0121_pystan_AllExon_SavedModel.py
+/dscrhome/gd44/jeffapps/bin/python2.7 0123_2_pystan_AllExon_SavedModel.py
