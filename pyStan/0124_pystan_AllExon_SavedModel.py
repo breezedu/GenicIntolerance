@@ -197,8 +197,23 @@ print(fit)
 print("plot fit figure")
 
 fit.plot()
-mp.savefig("0123_2nd_PyStan_Exon_Plot.png")
+mp.savefig("0124_PyStan_Exon_Plot.png")
 
+
+##################################################
+#extract the result
+result=fit.extract(permuted=True) 
+a=result["a"]
+beta=result["beta"]
+sigma_a=result["sigma_a"]
+print("\n print a, beta and sigma_a.\n")
+print(a)
+
+print("\n beta ")
+print(beta)
+
+print("\n Sigma_a")
+print(Sigma_a)
 
 ####################################################
 ## End
