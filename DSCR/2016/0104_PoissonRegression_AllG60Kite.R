@@ -90,6 +90,12 @@ gene<-as.numeric(table$gene)
 genelevel<-length(unique(gene))
 index<-match(gene, unique(gene)) 
 
+
+################
+## HERE??
+d=table1[which(table1$sumenvarp!=0), ]
+d$x=scale(d$sumenvarp)
+
 M1_table<-list( J=J, y=table1$sumenvarpfc,
                 x=table1$sumenvarp,gene=c(1:length(table1$sumenvarpfc)))
 
