@@ -107,7 +107,8 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
 fit1 <- stan(fit=fit0, data = M1_table, 
-				iter = 60000, 
+				iter = 100000, 
+				warmup = 50000,
 				chains=4)
 
 
@@ -120,11 +121,11 @@ print(fit1, "beta")
 
 answer1 <- extract(fit1, permuted = TRUE)
 effect <- answer1$a
-write.table(effect, "0104_Allgene_effectstan60K.txt", sep="\t")
+write.table(effect, "0125_Allgene_effectstan100k.txt", sep="\t")
 
 
 ## check convergence 
-pdf("0102_Allgene_traceplot40K.pdf")
+pdf("0125_Allgene_traceplot100k.pdf")
 
 
 traceplot(fit1,"beta")
