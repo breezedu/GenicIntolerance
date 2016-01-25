@@ -93,11 +93,11 @@ index<-match(gene, unique(gene))
 
 ################
 ## HERE??
-d=table1[which(table1$sumenvarp!=0), ]
-d$x=scale(d$sumenvarp)
+scale_d=table1[which(table1$sumenvarp!=0), ]
+scale_d$normx=scale(d$sumenvarp)
 
-M1_table<-list( J=J, y=table1$sumenvarpfc,
-                x=table1$sumenvarp,gene=c(1:length(table1$sumenvarpfc)))
+M1_table<-list( J=J, y=scale_d$sumenvarpfc,
+                x=scale_d$normx,gene=c(1:length(scale_d$sumenvarpfc)))
 
 
 ## fit rstan()
