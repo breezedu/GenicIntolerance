@@ -20,7 +20,7 @@
 
 
 table <- read.table("exon_level_process_v2.txt")
-table <- read.table("D:/GitHubRepositories/DataStats/exon_level_process_v2.txt")
+## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
 # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
@@ -78,10 +78,12 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 ##gene_code
-################
+
+
+########################################################
 ## HERE??
 scale_d=table1[which(table1$sumenvarp!=0), ]
-scale_d$normx=scale(scale_d$sumenvarp)
+scale_d$normx < c( scale(scale_d$sumenvarp) )
 
 
 ######################
@@ -103,13 +105,15 @@ M1_table<-list( J=J, y=scale_d$sumenvarpfc,
 ## fit rstan()
 
 ## fit the model
-fit0 <- stan(file = "possion.simpgene.rstan.stan")
+## fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
-fit1 <- stan(fit=fit0, data = M1_table, 
+fit1 <- stan(fit = "possion.simpgene.rstan.stan", 
+				data = M1_table, 
 				iter = 100000, 
 				warmup = 50000,
-				chains=4)
+				chains=4
+		)
 
 
 print(fit1, "a")
