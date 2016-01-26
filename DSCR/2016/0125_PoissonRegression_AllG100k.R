@@ -20,7 +20,7 @@
 
 
 table <- read.table("exon_level_process_v2.txt")
-## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
+table <- read.table("D:/GitHubRepositories/DataStats/exon_level_process_v2.txt")
 # table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
@@ -78,23 +78,23 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 ##gene_code
-
+################
+## HERE??
+scale_d=table1[which(table1$sumenvarp!=0), ]
+scale_d$normx=scale(scale_d$sumenvarp)
 
 
 ######################
 # init the parameters
 ######################
 N<-dim(table)[1]
-J<-dim(table1)[1]                       #number of genes in table1
+J<-dim(scale_d)[1]                       #number of genes in table1
 gene<-as.numeric(table$gene)
 genelevel<-length(unique(gene))
 index<-match(gene, unique(gene)) 
 
 
-################
-## HERE??
-scale_d=table1[which(table1$sumenvarp!=0), ]
-scale_d$normx=scale(d$sumenvarp)
+
 
 M1_table<-list( J=J, y=scale_d$sumenvarpfc,
                 x=scale_d$normx,gene=c(1:length(scale_d$sumenvarpfc)))

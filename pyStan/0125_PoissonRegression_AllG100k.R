@@ -83,7 +83,7 @@ options(mc.cores = parallel::detectCores())
 ########################################################
 ## HERE??
 scale_d=table1[which(table1$sumenvarp!=0), ]
-scale_d$normx=scale(scale_d$sumenvarp)
+scale_d$normx < c( scale(scale_d$sumenvarp) )
 
 
 ######################
