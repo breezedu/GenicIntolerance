@@ -81,38 +81,43 @@ options(mc.cores = parallel::detectCores())
 
 
 ########################################################
-## HERE??
+## scale_d talbe
+########################################################
 scale_d=table1[which(table1$sumenvarp!=0), ]
-scale_d$normx < c( scale(scale_d$sumenvarp) )
+scale_d$normx <- c( scale(scale_d$sumenvarp) )
 
 
 ######################
 # init the parameters
 ######################
-N<-dim(table)[1]
-J<-dim(scale_d)[1]                       #number of genes in table1
-gene<-as.numeric(table$gene)
-genelevel<-length(unique(gene))
+#N <- dim(table)[1]
+J <- dim(scale_d)[1]                       #number of genes in table1
+gene <- as.numeric(table$gene)
+genelevel <- length(unique(gene))
 index<-match(gene, unique(gene)) 
 
 
 
 
-M1_table<-list( J=J, y=scale_d$sumenvarpfc,
-                x=scale_d$normx,gene=c(1:length(scale_d$sumenvarpfc)))
+M1_table<-list( J=J,		             
+		gene=c(1:length(scale_d$sumenvarpfc)),
+		x=scale_d$normx,
+		y=scale_d$sumenvarpfc
+		)
 
 
 ## fit rstan()
 
 ## fit the model
-## fit0 <- stan(file = "possion.simpgene.rstan.stan")
+fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 ## fit the model with data
-fit1 <- stan(fit = "possion.simpgene.rstan.stan", 
-				data = M1_table, 
-				iter = 100000, 
-				warmup = 50000,
-				chains=4
+
+fit1 <- stan(	fit = fit0, 
+		data = M1_table, 
+		iter = 10000, 
+		warmup = 5000,
+		chains=4
 		)
 
 
