@@ -5,6 +5,6 @@
 #SBATCH -c 16
 #SBATCH --mem-per-cpu=8G
 #SBATCH --nodes=4
-#SBATCH --job-name=0128_30kIteration
+#SBATCH --job-name=0128_20kIteration
 
-R CMD BATCH ./0128_PoissonRegression_AllG30k.R
+R CMD BATCH ./0128_PoissonRegression_AllG20k.R

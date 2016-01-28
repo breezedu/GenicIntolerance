@@ -18,11 +18,10 @@
 ## create the tables
 ##########################################
 
-## Read in exon level data from the same directory
-table <- read.table("exon_level_process_v2.txt")
 
+table <- read.table("exon_level_process_v2.txt")
 ## table <- read.table("D:/GitHub/Stats/Data_Analysis_Duke/SQProject/exon_level_process_v2.txt")
-## table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
+# table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
 
 
 ## assign column names
@@ -116,7 +115,7 @@ fit0 <- stan(file = "possion.simpgene.rstan.stan")
 
 fit1 <- stan(	fit = fit0, 
 		data = M1_table, 
-		iter = 30000, 
+		iter = 20000, 
 		warmup = 10000,
 		chains=4
 		)
@@ -129,13 +128,12 @@ print(fit1, "beta")
 
 
 answer1 <- extract(fit1, permuted = TRUE)
-
-# effect <- answer1$a
-# write.table(effect, "0128_Allgene_effectstan30k.txt", sep="\t")
+effect <- answer1$a
+write.table(effect, "0128_Allgene_effectstan20k.txt", sep="\t")
 
 
 ## check convergence 
-pdf("0128_Allgene_traceplot30k.pdf")
+pdf("0128_Allgene_traceplot20k.pdf")
 
 
 traceplot(fit1,"beta")
