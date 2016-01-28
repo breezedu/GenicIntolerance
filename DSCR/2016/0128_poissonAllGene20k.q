@@ -4,7 +4,7 @@
 #SBATCH --mail-user=jeff.du@duke.edu
 #SBATCH -c 16
 #SBATCH --mem-per-cpu=8G
-#SBATCH --nodes=8
-#SBATCH --job-name=01262_100kIteration
+#SBATCH --nodes=4
+#SBATCH --job-name=0128_20kIteration
 
-R CMD BATCH ./0126_2_PoissonRegression_AllG100k.R
+R CMD BATCH ./0128_PoissonRegression_AllG20k.R
