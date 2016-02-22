@@ -122,17 +122,22 @@ for(j in 1:nsim){
   
   
   #simulate data under alternative
-  count<-1
+  count <- 1
+  
+  ### while loop for population 1
   while(count<=np1){
 
     for(c in 1:2){
       for(l in 1:nsites){
-        g[count,l,c]<-rbinom(1,1,p1[l])
+        g[count,l,c]<-rbinom(1,1,p1[l])         ## genotypes for population.
       }
     }
 
-    temp1<-sum(g[count,,1])
-    temp2<-sum(g[count,,2])
+    ## count -> person
+    ## ,, site
+    ## 1 or 2, gene copy
+    temp1<-sum(g[count,,1])            ## number of sites person 'count' has a affected 1st gene copy.
+    temp2<-sum(g[count,,2])            ## number of sites person 'count' has a affected 2nd gene copy.
 
     x[count]<-(temp1>0)+(temp2>0)
     if(x[count]<2){p.v<-b.v}
@@ -143,6 +148,9 @@ for(j in 1:nsim){
 
   } #end while(count<=np1)
 
+  
+  
+  ### while loop for population 2
   while(count<=n){
 
     for(c in 1:2){
