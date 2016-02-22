@@ -20,8 +20,8 @@ n <- np1+np2
 p.upper <- 0.05     # upper bound on qualifying variants
 b.v <- .95          # baseline viability (probability of being viable give zero or one affected gene copies)
 bta <- 1            # relative risk of viability given 2 affected copies versus baseline
-nsim <- 1           #
-s <- c(rep(0,nsim)) #
+nsim <- 1           # 
+s <- c(rep(0,nsim)) # 
 
 
 g <- array(0,dim=c(n,2*nsites,2))              # two matric, dim: 2000, 10, 2
@@ -61,7 +61,10 @@ for(i in 1:(2*nsites)){
 #[3,] 7.444081e-05 0.0002673596 6.751292e-06 7.493987e-06 0.0002419898 9.499450e-06 0.0002612945 0.0001571148 0.0002103752 5.672141e-05
 
 
-###################################################################
+#########################################################################
+##
+## Figure out how many genotype you can have given certain number of loci
+##
 ## function_baseB: 
 baseB <- function(x, digits, B){
 	baseB<-c(rep(0,digits))
