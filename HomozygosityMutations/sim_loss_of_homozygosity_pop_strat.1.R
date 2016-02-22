@@ -107,6 +107,9 @@ for(i in 1:bigN(2*nsites)){
 ## nnz 
 nnz <- 0
 
+
+########################################
+## 
 for(j in 1:nsim){
 	print(j)
   
@@ -170,8 +173,9 @@ for(j in 1:nsim){
     nnz<-nnz+1
   }
 
-}     #end for j in 1:nism, line 108
-
+}     ## end for j in 1:nism loop
+########################################
 
 sum(s<qnorm(.05))/nsim
 
+## END
