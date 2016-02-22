@@ -139,18 +139,18 @@ for(j in 1:nsim){
     temp1<-sum(g[count,,1])            ## number of sites person 'count' has a affected 1st gene copy.
     temp2<-sum(g[count,,2])            ## number of sites person 'count' has a affected 2nd gene copy.
 
-    x[count]<-(temp1>0)+(temp2>0)
-    if(x[count]<2){p.v<-b.v}
-    else{p.v<-b.v*bta}
+    x[count] <- (temp1>0)+(temp2>0)    ## number of gene copies that are affected for individual 'count';
+    if(x[count]<2){p.v<-b.v}           ## baseline of virable
+    else{p.v<-b.v*bta}                 ## p.v => prob of being viable 
 	
-    v[count]<-rbinom(1,1,p.v)
-    if(v[count]==1){count<-count+1}
+    v[count]<-rbinom(1,1,p.v)          ## viability of person 'count'
+    if(v[count]==1){count<-count+1}    
 
-  } #end while(count<=np1)
+  } #end while(count<=np1)             ## the while loop for population 1
 
   
   
-  ### while loop for population 2
+  ### while loop for population 2 
   while(count<=n){
 
     for(c in 1:2){
@@ -168,13 +168,16 @@ for(j in 1:nsim){
     v[count]<-rbinom(1,1,p.v)
     if(v[count]==1){count<-count+1}
 
-  } #end while(count<=n)
+  } #end while(count<=n)               ## the while loop for population 2
 
   
   ## g.obs: genotypes observed, a 1000*10 matrix
   ## so, next step to do, is to plug data from matric in LizDeidentified.zip?
   g.obs<-g[,,1]+g[,,2]
 
+  
+  ###############################
+  ## for loop for Pie_2|g
   for(i in 1:n){
     n1[i] <- sum(g.obs[i,]==1)
     n2[i] <- sum(g.obs[i,]==2)
@@ -184,6 +187,9 @@ for(j in 1:nsim){
     
   } #end for i in 1:n loop;
 
+  
+  ####################################################
+  ## s.1,.....,s.nsim <= statistic in nsim simulations
   s.j<-pi2.g-mu
   if(var(s.j)!=0){
     s[j]<-sum(s.j)/sqrt(n*var(s.j))
@@ -194,6 +200,9 @@ for(j in 1:nsim){
 ########################################
 print(nnz)
 
+
+########################################
+## POWER!
 # sum 
 sum(s<qnorm(.05))/nsim
 
