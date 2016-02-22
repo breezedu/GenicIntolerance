@@ -59,18 +59,22 @@ for(i in 1:(2*nsites)){
 #[3,] 7.444081e-05 0.0002673596 6.751292e-06 7.493987e-06 0.0002419898 9.499450e-06 0.0002612945 0.0001571148 0.0002103752 5.672141e-05
 
 
-baseB <- function(x,digits,B){
+
+## function_baseB: 
+baseB <- function(x, digits, B){
 	baseB<-c(rep(0,digits))
 	temp<-x
 	count<-1
 	while(temp>0){
-		baseB[count]<-temp%%B
-		temp<-temp%/%B
-		count<-count+1
+		baseB[count] <- temp%%B
+		temp <- temp%/%B
+		count < -count+1
 	}
 	return(baseB)	
 }
 
+
+## fnction_bigN
 bigN<-function(digits){
 	bigN<-0
 	for(i in 1:digits){
@@ -78,6 +82,8 @@ bigN<-function(digits){
 	}
 	return(bigN)
 }
+
+
 
 mu<-0
 for(i in 1:bigN(2*nsites)){
