@@ -84,82 +84,92 @@ bigN<-function(digits){
 }
 
 
-
-mu<-0
+## mu denotes mutations?
+mu <- 0
 for(i in 1:bigN(2*nsites)){
-	g.temp<-baseB(i,2*nsites,3)
-	n1.temp<-sum(g.temp==1)
-	n2.temp<-sum(g.temp==2)
-	if(n1.temp<=1 & n2.temp==0){pi2.g.temp<-0}
-	if(n1.temp>1 & n2.temp==0){pi2.g.temp<-1-(1/2)^(n1.temp-1)}
-	if(n2.temp>0){pi2.g.temp<-1}
-	rho<-1
+	g.temp <- baseB(i,2*nsites,3)
+	n1.temp <- sum(g.temp==1)
+	n2.temp <- sum(g.temp==2)
+	if(n1.temp<=1 & n2.temp==0) {pi2.g.temp<-0}
+	if(n1.temp>1 & n2.temp==0) {pi2.g.temp<-1-(1/2)^(n1.temp-1)}
+	if(n2.temp>0) {pi2.g.temp<-1}
+	
+	rho <- 1
 	for(j in 1:2*nsites){
 		rho<-rho*prob[g.temp[j]+1,j]
 	}
 	mu<-mu+rho*pi2.g.temp
 }
 
-nnz<-0
+
+## nnz 
+nnz <- 0
+
 for(j in 1:nsim){
 	print(j)
-#simulate data under alternative
-count<-1
-while(count<=np1){
+  
+  
+  #simulate data under alternative
+  count<-1
+  while(count<=np1){
 
-	for(c in 1:2){
-		for(l in 1:nsites){
-			g[count,l,c]<-rbinom(1,1,p1[l])
-		}
-	}
+    for(c in 1:2){
+      for(l in 1:nsites){
+        g[count,l,c]<-rbinom(1,1,p1[l])
+      }
+    }
 
-	temp1<-sum(g[count,,1])
-	temp2<-sum(g[count,,2])
+    temp1<-sum(g[count,,1])
+    temp2<-sum(g[count,,2])
 
-	x[count]<-(temp1>0)+(temp2>0)
-	if(x[count]<2){p.v<-b.v}
-	else{p.v<-b.v*bta}
+    x[count]<-(temp1>0)+(temp2>0)
+    if(x[count]<2){p.v<-b.v}
+    else{p.v<-b.v*bta}
 	
-	v[count]<-rbinom(1,1,p.v)
-	if(v[count]==1){count<-count+1}
+    v[count]<-rbinom(1,1,p.v)
+    if(v[count]==1){count<-count+1}
 
-}
+  } #end while(count<=np1)
 
-while(count<=n){
+  while(count<=n){
 
-	for(c in 1:2){
-		for(l in (nsites+1):(2*nsites)){
-			g[count,l,c]<-rbinom(1,1,p2[l-nsites])
-		}
-	}
+    for(c in 1:2){
+      for(l in (nsites+1):(2*nsites)){
+        g[count,l,c]<-rbinom(1,1,p2[l-nsites])
+      }
+    }
 
-	temp1<-sum(g[count,,1])
-	temp2<-sum(g[count,,2])
+    temp1<-sum(g[count,,1])
+    temp2<-sum(g[count,,2])
 
-	x[count]<-(temp1>0)+(temp2>0)
-	if(x[count]<2){p.v<-b.v}
-	else{p.v<-b.v*bta}
-	v[count]<-rbinom(1,1,p.v)
-	if(v[count]==1){count<-count+1}
+    x[count]<-(temp1>0)+(temp2>0)
+    if(x[count]<2){p.v<-b.v}
+    else{p.v<-b.v*bta}
+    v[count]<-rbinom(1,1,p.v)
+    if(v[count]==1){count<-count+1}
 
-}
+  } #end while(count<=n)
 
-g.obs<-g[,,1]+g[,,2]
+  
+  g.obs<-g[,,1]+g[,,2]
 
-for(i in 1:n){
-	n1[i]<-sum(g.obs[i,]==1)
-	n2[i]<-sum(g.obs[i,]==2)
-	if(n1[i]<=1 & n2[i]==0){pi2.g[i]<-0}
-	if(n1[i]>1 & n2[i]==0){pi2.g[i]<-1-(1/2)^(n1[i]-1)}
-	if(n2[i]>0){pi2.g[i]<-1}
-}
+  for(i in 1:n){
+    n1[i]<-sum(g.obs[i,]==1)
+    n2[i]<-sum(g.obs[i,]==2)
+    if(n1[i]<=1 & n2[i]==0){pi2.g[i]<-0}
+    if(n1[i]>1 & n2[i]==0){pi2.g[i]<-1-(1/2)^(n1[i]-1)}
+    if(n2[i]>0){pi2.g[i]<-1}
+    
+  } #end for i in 1:n loop;
 
-s.j<-pi2.g-mu
-if(var(s.j)!=0){
-s[j]<-sum(s.j)/sqrt(n*var(s.j))
-nnz<-nnz+1
-}
+  s.j<-pi2.g-mu
+  if(var(s.j)!=0){
+    s[j]<-sum(s.j)/sqrt(n*var(s.j))
+    nnz<-nnz+1
+  }
 
-}     #end for in line 80
+}     #end for j in 1:nism, line 108
+
 
 sum(s<qnorm(.05))/nsim
+
