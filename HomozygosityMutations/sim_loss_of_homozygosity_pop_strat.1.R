@@ -105,6 +105,8 @@ for(i in 1:bigN(2*nsites)){
 	mu<-mu+rho*pi2.g.temp
 }
 
+## after for loop, mu = 27702.14
+
 
 ## nnz 
 nnz <- 0
@@ -158,14 +160,16 @@ for(j in 1:nsim){
   } #end while(count<=n)
 
   
+  ## g.obs: genotypes observed, a 1000*10 matrix
+  ## so, next step to do, is to plug data from matric in LizDeidentified.zip?
   g.obs<-g[,,1]+g[,,2]
 
   for(i in 1:n){
-    n1[i]<-sum(g.obs[i,]==1)
-    n2[i]<-sum(g.obs[i,]==2)
-    if(n1[i]<=1 & n2[i]==0){pi2.g[i]<-0}
-    if(n1[i]>1 & n2[i]==0){pi2.g[i]<-1-(1/2)^(n1[i]-1)}
-    if(n2[i]>0){pi2.g[i]<-1}
+    n1[i] <- sum(g.obs[i,]==1)
+    n2[i] <- sum(g.obs[i,]==2)
+    if(n1[i]<=1 & n2[i]==0) {pi2.g[i]<-0}
+    if(n1[i]>1 & n2[i]==0) {pi2.g[i]<-1-(1/2)^(n1[i]-1)}
+    if(n2[i]>0) {pi2.g[i]<-1}
     
   } #end for i in 1:n loop;
 
@@ -177,7 +181,11 @@ for(j in 1:nsim){
 
 }     ## end for j in 1:nism loop
 ########################################
+print(nnz)
 
+# sum 
 sum(s<qnorm(.05))/nsim
+
+##? s<qnorm(0.05)) = 1, nsim = 1. Confused...
 
 ## END
