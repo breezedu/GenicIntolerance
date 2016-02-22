@@ -1,47 +1,59 @@
-##
+###########################################################################################################
 ##
 ## Homozygosity Project
 ## Date 12-29-2015
 ## Aim: Simulation Loss of Homozygosity Population Strat 1
 ## @ authors: Andrew Allen 
 ## @ student: Jeff Du
-## Data source: 
+## Data source: Simulation
 ## Models:  Poisson
 ## Parameters: 
-
-nsites<-5         #number of polymorphic qualifying sites in gene
-np1<-1000         #sample size popn1
-np2<-1000         #sample size popn2
-n<-np1+np2
-p.upper<-0.05     #upper bound on qualifying variants
-b.v<-.95          # baseline viability (probability of being viable give zero or one affected gene copies)
-bta<-1            # relative risk of viability given 2 affected copies versus baseline
-nsim<-1
-s<-c(rep(0,nsim))
+##
+## 
+###########################################################################################################
 
 
-g<-array(0,dim=c(n,2*nsites,2))
-x<-c(rep(0,n))
-v<-c(rep(0,n))
-n1<-c(rep(0,n))
-n2<-c(rep(0,n))
-pi2.g<-c(rep(0,n))
-
-p1<-runif(nsites,min=2/(2*np1),max=p.upper)
-p2<-runif(nsites,min=2/(2*np2),max=p.upper)
-p<-c(p1*np1/n,p2*np2/n)
-
+nsites <- 5         # number of polymorphic qualifying sites in gene
+np1 <- 1000         # sample size popn1
+np2 <- 1000         # sample size popn2
+n <- np1+np2
+p.upper <- 0.05     # upper bound on qualifying variants
+b.v <- .95          # baseline viability (probability of being viable give zero or one affected gene copies)
+bta <- 1            # relative risk of viability given 2 affected copies versus baseline
+nsim <- 1           #
+s <- c(rep(0,nsim)) #
 
 
+g <- array(0,dim=c(n,2*nsites,2))              # two matric, dim: 2000, 10, 2
+x <- c(rep(0,n))                               # x replicates n=2000 values in 0
+v <- c(rep(0,n))                               # v ...
+n1 <- c(rep(0,n))                              # n1 ...
+n2 <- c(rep(0,n))                              # n2 ...
+pi2.g <- c(rep(0,n))                           # pi2.g ...
 
-prob<-matrix(0,3,2*nsites)      # site specific genotype probabilities
+
+p1 <- runif(nsites, min=2/(2*np1), max=p.upper)   # generate random deviates from 0.001 to 0.5
+p2 <- runif(nsites, min=2/(2*np2), max=p.upper)   # generate random deviates from 0.001 to 0.5
+p <- c(p1*np1/n, p2*np2/n)                        # merge p1*2 and p2*2
+
+
+
+## prob, a matrix with 3 rows and 10 cols
+## row[0] ~ n of X = 0 no 
+## row[1] ~ n of X = 1 het
+## row[2] ~ n of X = 2 hom
+## each rol represents a gene
+prob <- matrix(0,3,2*nsites)      # site specific genotype probabilities
+
+## generate and assign values to prob[][]
 for(i in 1:(2*nsites)){
-	prob[1,i]<-(1-p[i])^2
-	prob[2,i]<-2*p[i]*(1-p[i])
-	prob[3,i]<-p[i]^2
+	prob[1,i] <- (1-p[i])^2
+	prob[2,i] <- 2*p[i]*(1-p[i])
+	prob[3,i] <- p[i]^2
 }
 
-baseB<-function(x,digits,B){
+
+baseB <- function(x,digits,B){
 	baseB<-c(rep(0,digits))
 	temp<-x
 	count<-1
