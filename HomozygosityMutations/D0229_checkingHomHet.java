@@ -19,6 +19,11 @@ public class D0229_checkingHomHet{
 		//initial names for each documents, there are 12 of them together.
 		String[] doc = new String[12];
 		
+		//only two documents for test code:
+		//doc[0] = "gene_samp_matrix_high_LOF_het";
+		//doc[1] = "gene_samp_matrix_high_LOF_hom";
+		
+		/**/
 		doc[0] = "gene_samp_matrix_high_LOF_het";
 		doc[1] = "gene_samp_matrix_high_LOF_hom";
 		doc[2] = "gene_samp_matrix_high_not_benign_het";
@@ -33,7 +38,7 @@ public class D0229_checkingHomHet{
 		doc[9] = "gene_samp_matrix_low_not_benign_hom";
 		doc[10] = "gene_samp_matrix_low_not_syn_het";
 		doc[11] = "gene_samp_matrix_low_not_syn_hom";
-		
+		/*****/
 		
 		//2nd initiate an ArrayList of genes:
 		ArrayList<gene> geneList = new ArrayList<gene>();
@@ -58,6 +63,13 @@ public class D0229_checkingHomHet{
 		
 		
 		//3rd, statistic the n1 and n2, update Pi2[] for each gene.
+		//check the # of genes in the geneList;
+		System.out.println("\n, there are " + geneList.size() + " gene objects in the arrayList.");
+		for(int i=0; i<200; i++){
+			System.out.println("Gene[" + i + "]: " + geneList.get(i).name + ", " + geneList.get(i).zeros + ", " + geneList.get(i).ones + ", " + geneList.get(i).twos);
+		}
+		
+		
 		
 	}//end main()
 	
@@ -69,14 +81,14 @@ public class D0229_checkingHomHet{
 	 * @param geneList 
 	 * @return 
 	 */
-	private static ArrayList<gene> checkEachDoc(Scanner read_in, String doc, ArrayList<gene> geneArrayList) {
+	private static ArrayList<gene> checkEachDoc(Scanner read_in, String doc, ArrayList<gene> geneList) {
 		// TODO Auto-generated method stub
 		
 		//the first line of the document shows how many genes are there
 		String first_line = read_in.nextLine();
 		
 		//split the first line string, with '\t'
-		String[] gene = first_line.split("\t");
+		String[] geneStr = first_line.split("\t");
 		
 		//initiate an arrayList to store gene names
 		ArrayList<String> geneNames = new ArrayList<String>();
@@ -86,17 +98,30 @@ public class D0229_checkingHomHet{
 		
 		
 		//add every gene name to geneList, add 0 to correlate gene index;
-		//
-		for(int i=0; i<gene.length; i++){
-			geneNames.add(gene[i]);
+		//the first string in geneStr[] array is "sample", so we ignore this one later;
+		for(int i=0; i<geneStr.length; i++){
+			geneNames.add(geneStr[i]);
 			countList.add(0);
-		}
+			
+			//System.out.println("There are " + geneList.size() + " genes in the geneList.");
+			if(geneList.size()< geneStr.length){
+				
+				gene currGene = new gene();
+				currGene.name = geneStr[i];
+				currGene.zeros = 0;
+				currGene.ones = 0;
+				currGene.twos = 0;
+			
+				geneList.add(currGene);
+			}//end if geneList is empty condition;
+		
+		}//end for i<geneStr.length loop;
 		
 		
 		//print out informations
 		System.out.println("\nFor document: " + doc);
 		
-		System.out.println("There are " + gene.length + " genes." + " " + gene[0] + " " + gene[1]);
+		System.out.println("There are " + geneStr.length + " genes." + " " + geneStr[0] + " " + geneStr[1]);
 		
 		//initialize ones, twos, NASs, and Controls
 		long zero = 0;
@@ -123,22 +148,32 @@ public class D0229_checkingHomHet{
 			else if(lineSplit[0].contains("NAS"))
 				NAS ++;
 			
+			
+			//check each data record in the matrix: if it is 0, gene-object.zero +1;
+			// else if it is 1, gene-object.one +1;
+			// else if it is 2, gene-object.two +1;
 			for(int i=1; i<lineSplit.length; i++){
 				
 				if(lineSplit[i].equals("1")){
 					countList.set(i, countList.get(i) + 1);
 					thisCount ++;
 					one ++;
+					
+					geneList.get(i).ones = geneList.get(i).ones + 1;
 				
 				} else if(lineSplit[i].equals("2")){
 					countList.set(i, countList.get(i) + 2);
 					thisCount += 2;
 					two ++;
 					
+					geneList.get(i).twos = geneList.get(i).twos + 1;
+					
 				} else {
 					
 					zero ++;
 				
+					geneList.get(i).zeros = geneList.get(i).zeros + 1;
+					
 				}//end if-else conditions;
 				
 			}//end for i<lineSplit.length loop;
@@ -178,7 +213,7 @@ public class D0229_checkingHomHet{
 		
 		System.out.println("\n ***************************\n");
 		
-		return geneArrayList;
+		return geneList;
 	}//end of checkEachDoc() method;
 	
 }//ee
@@ -192,8 +227,9 @@ public class D0229_checkingHomHet{
  */
 class gene{
 	
-	String name;
-	int ones;
-	int twos;
+	String name = "";
+	int zeros = 0;
+	int ones = 0;
+	int twos = 0;
 	
 }
