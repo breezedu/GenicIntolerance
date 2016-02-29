@@ -11,7 +11,8 @@ public class D0229_checkingHomHet{
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		
-		//readin text file from local dick.
+		
+		//1st readin text file from local dick.
 		//D:\Dropbox\PhD Project BioStats\Homozygosity Mutations\als\LizDeidentified_151002\LizDeidentified_151002
 		String routine = "D:/Dropbox/PhD Project BioStats/Homozygosity Mutations/als/LizDeidentified_151002/LizDeidentified_151002/";
 		
@@ -34,7 +35,7 @@ public class D0229_checkingHomHet{
 		doc[11] = "gene_samp_matrix_low_not_syn_hom";
 		
 		
-		//initiate an ArrayList of genes:
+		//2nd initiate an ArrayList of genes:
 		ArrayList<gene> geneList = new ArrayList<gene>();
 		
 		//for each document, check how many genes, how many 1s, how man 2s, how many NAS patients, and how many Controls.
@@ -46,7 +47,8 @@ public class D0229_checkingHomHet{
 			//use a Scanner to 'scan' the document.
 			Scanner read_in = new Scanner( new File(routine + doc[i]));
 			
-			//call checkEachDoc() method, to analysis the document.
+			//call checkEachDoc() method, to analysis the document. According to the data readed in from each docs
+			//update the ones and twos parameters of each gene in the geneList.
 			geneList = checkEachDoc(read_in, doc[i], geneList);
 			
 			//close the read_in doc.
@@ -54,6 +56,8 @@ public class D0229_checkingHomHet{
 		
 		}//end for loop;
 		
+		
+		//3rd, statistic the n1 and n2, update Pi2[] for each gene.
 		
 	}//end main()
 	
@@ -75,15 +79,16 @@ public class D0229_checkingHomHet{
 		String[] gene = first_line.split("\t");
 		
 		//initiate an arrayList to store gene names
-		ArrayList<String> geneList = new ArrayList<String>();
+		ArrayList<String> geneNames = new ArrayList<String>();
 		
 		//initiate an arrayList to store counts of each gene, a parallel arrayList to 
 		ArrayList<Integer> countList = new ArrayList<Integer>();
 		
 		
 		//add every gene name to geneList, add 0 to correlate gene index;
+		//
 		for(int i=0; i<gene.length; i++){
-			geneList.add(gene[i]);
+			geneNames.add(gene[i]);
 			countList.add(0);
 		}
 		
@@ -151,10 +156,10 @@ public class D0229_checkingHomHet{
 		int geneWithMaxCount = 0;
 		String geneName = "";
 		
-		for(int i=1; i<countList.size(); i++){
+		for(int i=0; i<countList.size(); i++){
 			if(countList.get(i) > geneWithMaxCount){
 				geneWithMaxCount = countList.get(i);
-				geneName = geneList.get(i);
+				geneName = geneNames.get(i);
 			}
 		}
 		
