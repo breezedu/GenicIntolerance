@@ -64,9 +64,9 @@ public class D0229_checkingHomHet{
 		
 		//3rd, statistic the n1 and n2, update Pi2[] for each gene.
 		//check the # of genes in the geneList;
-		System.out.println("\n, there are " + geneList.size() + " gene objects in the arrayList.");
+		System.out.println("\n There are " + geneList.size() + " gene objects in the arrayList.");
 		for(int i=0; i<200; i++){
-			System.out.println("Gene[" + i + "]: " + geneList.get(i).name + ", " + geneList.get(i).zeros + ", " + geneList.get(i).ones + ", " + geneList.get(i).twos);
+			System.out.println("Gene[" + i + "]: \t" + geneList.get(i).name + ", \t" + geneList.get(i).zeros + ", \t" + geneList.get(i).ones + ", \t" + geneList.get(i).twos);
 		}
 		
 		
@@ -224,7 +224,7 @@ public class D0229_checkingHomHet{
  * 
  * @author Jeff
  *
- */
+ *
 class gene{
 	
 	String name = "";
@@ -233,3 +233,5 @@ class gene{
 	int twos = 0;
 	
 }
+
+*/
