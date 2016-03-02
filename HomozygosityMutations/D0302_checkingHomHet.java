@@ -96,14 +96,21 @@ public class D0302_checkingHomHet{
 			
 		}
 		
-		System.out.println("\n Printout sample-variance and control-variance:");
+		System.out.println("\n\n Printout sample-variance");
 		for(int i=0; i<500; i++){
 			
 			if(i%100 == 0) System.out.println();
-			System.out.print("\t" + geneList.get(i).getSampleVar() +", " + geneList.get(i).getControlVar() + "\t");
+			System.out.print("\t" + geneList.get(i).getSampleVar() );
 			
 		}
 		
+		System.out.println("\n\n Printout control-variance:");
+		for(int i=0; i<500; i++){
+			
+			if(i%100 == 0) System.out.println();
+			System.out.print("\t"+ geneList.get(i).getControlVar() );
+			
+		}
 		
 	}//end main()
 	
