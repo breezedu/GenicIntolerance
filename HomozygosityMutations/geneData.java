@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 class geneData{
 	
-	private String name = "";
+	private String name;
 	private ArrayList<Integer> controlList;
 	private ArrayList<Integer> sampleList;
 	
