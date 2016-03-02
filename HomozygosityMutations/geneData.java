@@ -20,19 +20,12 @@ class geneData{
 	private double controlMean;
 	
 	//public geneData
-	public geneData(String geneName, String sample, int num){
+	public geneData(String geneName){
 		super();
 		
-		this.name = geneName;
-		
-		if(sample.equals("Control")){
-			
-			setControlList(num);
-			
-		} else {
-			
-			setSampleList(num);
-		}
+		this.name = geneName;	
+		this.controlList = new ArrayList<Integer>();
+		this.sampleList = new ArrayList<Integer>();
 		
 	}//end public
 	
@@ -43,6 +36,7 @@ class geneData{
 	
 	public void setName(String geneName){
 		this.name = geneName;
+
 	}
 	
 	//get controlList and set controlList
