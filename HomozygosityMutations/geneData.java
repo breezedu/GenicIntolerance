@@ -64,7 +64,7 @@ class geneData{
 		this.sampleList.add(num);
 	}
 	
-	
+	//set sampleMean and get sample mean;
 	public void setSampleMean(){
 		
 		double sum = 0.0;
@@ -79,7 +79,7 @@ class geneData{
 		return this.sampleMean;
 	}
 	
-	
+	//set control mean and get control mean
 	public void setControlMean(){
 		double sum = 0.0;
 		
@@ -94,5 +94,7 @@ class geneData{
 		
 		return this.controlMean;
 	}
+	
+	
 	
 }//end class geneData
