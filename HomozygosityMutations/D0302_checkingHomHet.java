@@ -88,29 +88,64 @@ public class D0302_checkingHomHet{
 		
 		
 		System.out.println("\n\n There are " + geneList.size() + " gene objects in the arrayList.");
-		System.out.println("Printout first 500 control means:");
-		for(int i=0; i<500; i++){
+		System.out.println("Printout first 50 control means:");
+		for(int i=0; i<50; i++){
 			
-			if(i%100 == 0) System.out.println();
-			System.out.print("\t" + controlMean.get(i));
+			if(i%5 == 0) System.out.println();
+			System.out.print( controlMean.get(i) + "\t");
 			
 		}
 		
 		System.out.println("\n\n Printout sample-variance");
-		for(int i=0; i<500; i++){
+		for(int i=0; i<50; i++){
 			
-			if(i%100 == 0) System.out.println();
-			System.out.print("\t" + geneList.get(i).getSampleVar() );
+			if(i%5 == 0) System.out.println();
+			System.out.print( geneList.get(i).getSampleVar() + "\t");
 			
 		}
 		
 		System.out.println("\n\n Printout control-variance:");
-		for(int i=0; i<500; i++){
+		for(int i=0; i<50; i++){
 			
-			if(i%100 == 0) System.out.println();
-			System.out.print("\t"+ geneList.get(i).getControlVar() );
+			if(i%5 == 0) System.out.println();
+			System.out.print(geneList.get(i).getControlVar() + "\t");
 			
 		}
+		
+		
+		
+		//4th, calculate Tj[] for each gene
+		ArrayList<Double> TjArrayList = new ArrayList<Double>();
+		for(int i =0; i<geneList.size(); i++){
+			
+			double Tj_sum = 0.0;
+			for(int j=0; j<geneList.get(i).getControlList().size(); j++){
+				
+				Tj_sum += geneList.get(i).getControlList().get(j);
+			}
+			
+			TjArrayList.add(Tj_sum/geneList.get(i).getControlVar());
+		}
+		
+		//printout Tj[]
+		System.out.println("\n\n Printout Tj ArrayList:");
+		
+		for(int i=0; i<50; i++){
+			
+			if(i%5 == 0) System.out.println();
+			System.out.print(TjArrayList.get(i) + "\t");
+		}
+		
+		
+		
+		//
+		System.out.println("\n\n Print control mean == 0 gene names:");
+		for(int i=0; i<geneList.size(); i++){
+			
+			if(geneList.get(i).getControlMean() == 0.0) 
+				System.out.print(geneList.get(i).getName() + "\t");
+		}
+		
 		
 	}//end main()
 	
