@@ -16,6 +16,8 @@ class geneData{
 	private String name;
 	private ArrayList<Integer> controlList;
 	private ArrayList<Integer> sampleList;
+	private double sampleMean;
+	private double controlMean;
 	
 	//public geneData
 	public geneData(String geneName, String sample, int num){
@@ -61,4 +63,36 @@ class geneData{
 	public void setSampleList(int num){
 		this.sampleList.add(num);
 	}
-}
+	
+	
+	public void setSampleMean(){
+		
+		double sum = 0.0;
+		for(int i=0; i<this.sampleList.size(); i++){
+			sum += this.sampleList.get(i);
+		}
+		
+		this.sampleMean = sum/this.sampleList.size();
+	}
+	
+	public double getSampleMean(){
+		return this.sampleMean;
+	}
+	
+	
+	public void setControlMean(){
+		double sum = 0.0;
+		
+		for(int i=0; i<this.controlList.size(); i++){
+			sum += this.controlList.get(i);
+		}
+		
+		this.controlMean = sum/this.controlList.size();
+	}
+	
+	public double getControlMean(){
+		
+		return this.controlMean;
+	}
+	
+}//end class geneData
