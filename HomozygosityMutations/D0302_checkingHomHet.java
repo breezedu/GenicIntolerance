@@ -40,6 +40,7 @@ public class D0302_checkingHomHet{
 		doc[11] = "gene_samp_matrix_low_not_syn_hom";
 		*****/
 		
+		
 		//2nd initiate an ArrayList of genes:
 		ArrayList<geneData> geneList = new ArrayList<geneData>();
 		
@@ -76,18 +77,30 @@ public class D0302_checkingHomHet{
 		}
 		
 		//assign sample mean and control mean to sampleMean arrayList and controlMean arrayList;
+		//also, calculate the control-variance and sample-variance, after we get the sample-mean and control-mean for each gene;
 		for(int i=0; i<geneList.size(); i++){
 			sampleMean.add( geneList.get(i).getSampleMean() );
 			controlMean.add( geneList.get(i).getControlMean());
+			
+			geneList.get(i).calControlVar();
+			geneList.get(i).calSampleVar();
 		}
 		
 		
 		System.out.println("\n\n There are " + geneList.size() + " gene objects in the arrayList.");
-		
+		System.out.println("Printout first 500 control means:");
 		for(int i=0; i<500; i++){
 			
 			if(i%100 == 0) System.out.println();
 			System.out.print("\t" + controlMean.get(i));
+			
+		}
+		
+		System.out.println("\n Printout sample-variance and control-variance:");
+		for(int i=0; i<500; i++){
+			
+			if(i%100 == 0) System.out.println();
+			System.out.print("\t" + geneList.get(i).getSampleVar() +", " + geneList.get(i).getControlVar() + "\t");
 			
 		}
 		
@@ -111,18 +124,10 @@ public class D0302_checkingHomHet{
 		//split the first line string, with '\t'
 		String[] geneStr = first_line.split("\t");
 		
-		//initiate an arrayList to store gene names
-		ArrayList<String> geneNames = new ArrayList<String>();
-		
-		//initiate an arrayList to store counts of each gene, a parallel arrayList to 
-		ArrayList<Integer> countList = new ArrayList<Integer>();
-		
 		
 		//add every gene name to geneList, add 0 to correlate gene index;
 		//the first string in geneStr[] array is "sample", so we ignore this one later;
 		for(int i=0; i<geneStr.length; i++){
-			geneNames.add(geneStr[i]);
-			countList.add(0);
 			
 			//System.out.println("There are " + geneList.size() + " genes in the geneList.");
 			if(geneList.size()< geneStr.length){
@@ -138,10 +143,10 @@ public class D0302_checkingHomHet{
 		}//end for i<geneStr.length loop;
 		
 		
-		//print out informations
-		System.out.println("\nFor document: " + doc);
 		
-		System.out.println("There are " + geneStr.length + " genes." + " " + geneStr[0] + " " + geneStr[1]);
+		//print out informations from the text document;
+		System.out.println("\nFor document: " + doc);		
+		System.out.println("There are " + geneStr.length + " genes.");
 		
 		//initialize ones, twos, NASs, and Controls
 
@@ -157,7 +162,8 @@ public class D0302_checkingHomHet{
 			String[] lineSplit = currLine.split("\t");
 			//System.out.print("  " + lineSplit[0]);
 			
-			String sample = ""; 		//here category = "control" or "sample";
+			String sample = ""; 		//here sample = "control" or "sample";
+			
 			//Check the first world of each line, see if it contains "control", "nas"
 			if(lineSplit[0].contains("CONTROL")){
 				
@@ -186,14 +192,10 @@ public class D0302_checkingHomHet{
 
 			
 		}// end while loop;
-		
-		
-		
+				
 		System.out.println("\n ***************************\n");
 		System.out.println("There are " + geneList.size() + " genes.");
-		System.out.println("");
-		System.out.println("Controls: " + Control + ", NAS: " + NAS);
-		
+		System.out.println("Controls: " + Control + ", NAS: " + NAS);		
 		
 		return geneList;
 		

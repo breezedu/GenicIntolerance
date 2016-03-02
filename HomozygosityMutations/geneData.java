@@ -18,6 +18,8 @@ class geneData{
 	private ArrayList<Integer> sampleList;
 	private double sampleMean;
 	private double controlMean;
+	private double sampleVar;
+	private double controlVar;
 	
 	//public geneData
 	public geneData(String geneName){
@@ -26,6 +28,11 @@ class geneData{
 		this.name = geneName;	
 		this.controlList = new ArrayList<Integer>();
 		this.sampleList = new ArrayList<Integer>();
+		this.sampleMean = 0;
+		this.controlMean = 0;
+		this.sampleVar = 0;
+		this.controlVar = 0;
+		
 		
 	}//end public
 	
@@ -89,6 +96,36 @@ class geneData{
 		return this.controlMean;
 	}
 	
+	//calculate and get control-variance;
+	public void calControlVar(){
+		double mean = getControlMean();
+		double temp = 0;
+		
+		for(int i=0; i<this.controlList.size(); i++){
+			temp += (mean - this.controlList.get(i) * (mean - this.controlList.get(i)));
+		}
+		
+		this.controlVar = temp/this.controlList.size();
+	}
 	
+	public double getControlVar(){
+		return this.controlVar;
+	}
+	
+	//calculate and get sample-variance;
+	public void calSampleVar(){
+		double mean = this.sampleMean;
+		double temp = 0;
+		
+		for(int i=0; i<this.sampleList.size(); i++){
+			temp += (mean - this.sampleList.get(i)) * (mean - this.sampleList.get(i));
+		}
+		
+		this.sampleVar = temp/this.sampleList.size();
+	}
+	
+	public double getSampleVar(){
+		return this.sampleVar;
+	}
 	
 }//end class geneData
