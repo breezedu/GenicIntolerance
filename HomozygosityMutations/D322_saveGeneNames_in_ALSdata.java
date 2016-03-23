@@ -1,13 +1,15 @@
 package coursera_java_duke;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class D322_saveGeneNames_in_ALSdata {
 
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args) throws IOException{
 		
 		//1st readin text file from local dick.
 				//D:\PhD\LizDeidentified_151002\LizDeidentified_151002
@@ -63,9 +65,21 @@ public class D322_saveGeneNames_in_ALSdata {
 				}//end for loop;
 				
 				
+				//save the gene names to a txt document
+				File output = new File(routine + "/gene_names.txt");
+				BufferedWriter out_Writer = new BufferedWriter(new FileWriter(output));
 				
+				//write every string in the geneNames arrayList to the output file
+				for(int i=0; i<geneNames.size(); i++){
+					
+					out_Writer.write(geneNames.get(i) + "\t");
+				}
 				
+				out_Writer.write("\n");
 		
+				
+				out_Writer.close();
+				
 	}//end main();
 
 	
