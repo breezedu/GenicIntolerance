@@ -89,7 +89,13 @@ public class D0322_saveGeneNames_in_ALSdata {
 	}//end main();
 
 	
-	
+	/******************
+	 * 
+	 * @param read_in
+	 * @param docName
+	 * @param geneNames
+	 * @return
+	 */
 	private static ArrayList<String> getNamesFromEachDoc(Scanner read_in, String docName, ArrayList<String> geneNames) {
 		// TODO Auto-generated method stub
 		int mismatch = 0; //the mistched names in the old header and new header;
