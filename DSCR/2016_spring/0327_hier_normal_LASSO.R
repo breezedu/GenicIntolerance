@@ -1,11 +1,69 @@
+############################################
+## ShuaiQi's Project
+## Date 	03-25-2016
+## Aim: 	Try All Genes
+## @ authors: 	SQ
+## Data source: /dscrhome/gd44/SQProject/RStan/2016/exon_level_process_v2.txt
+## Models: 	Bayesian Stan
+## Parameters:	
+## Outputs: 	
+
+
+## Data source and copyright?
+## Read in table from local hard drive:
+## setup the working directory to where exon_level_process_v2.txt locates
+
+##########################################
+## Part One Read in the data
+## create the tables
+##########################################
+
+## Read in exon level data from the same directory
+table <- read.table("exon_level_process_v2.txt")
+#obs<-c(1:dim(table)[1])
+#table<-cbind(obs,table)
+#table<-read.table("C:/Users/shuaiqi/Desktop/duke/Andrew/data/for_asa/other_stuff/exon_level_process_v3.txt")
+
+colnames(table)<- c("chr", "gene", "dom", "subdom", "exon", "gene.dom", 
+             "gene.dom.subdom", 
+             "envarp",    # pass
+             "envarpf",   # pass functional
+             "envarpfr",  # pass functional rare
+             "emutr")     # mutation rate 
+
+table<-within(table,envarpfc<-envarpf-envarpfr)#y
+table<-within(table,gene<-factor(gene))
+table<-within(table,gene.dom<-factor(gene.dom))
+table<-within(table,gene.dom.subdom<-factor(gene.dom.subdom))
+table<-table[which(table$envarp!=0), ]
+table$x=scale(table$envarp)
+table<-table[1:1000,]
+
+
+#for the use of counting number of gene
+sumenvarp<-aggregate(table$envarp, by=list(Category=table$gene), FUN=sum)
+sumenvarpfc<-aggregate(table$envarpfc, by=list(Category=table$gene), FUN=sum)[,2]
+table1<-data.frame(cbind(sumenvarp,sumenvarpfc))
+colnames(table1)<-c("gene","sumenvarp","sumenvarpfc")
+
+
+
+
+
+
+
+#######################################################
+## Part Two
+## Call Stan to do the simutation
+#######################################################
 hiernormalLASSO<-"
 data{ #get the data set 
-int<lower=0> N;   # number of exon level
-int<lower=0> J;   # number of gene level
-int <lower=1,upper=J> gene[N];  #index of gene
-int <lower=1,upper=N> exon[N];  #index of exon 
-vector[N] xij;   #x at exon level
-vector[N] yij; #y at exon level
+	int<lower=0> N;   # number of exon level
+	int<lower=0> J;   # number of gene level
+	int <lower=1,upper=J> gene[N];  #index of gene
+	int <lower=1,upper=N> exon[N];  #index of exon 
+	vector[N] xij;   #x at exon level
+	vector[N] yij; #y at exon level
 }
 parameters{ #specify the parameter we want to know 
 	real lambda;#penalty 
@@ -38,7 +96,11 @@ model { #give the prior distribution
       }             
 }             
 "
+
+
 library("rstan")
+
+
 J<-dim(table1)[1] #gene number 
 N<-dim(table)[1]  #exon number 
 xij=c(table$envarp)
@@ -52,6 +114,8 @@ exon<-c(1:length(table$envarpfc))
 M1_table<-list(N=N, J=J, xij=xij,
 yij=yij,gene=indexg, exon=exon)
 control=list(adapt_delta=0.99,max_treedepth=12)
+
+
 fitlasso<-stan(model_code=hiernormalLASSO, data=M1_table,iter=20000,warmup=19000,chains=4)
 
 
@@ -65,7 +129,7 @@ plotdesvar<-function(length){
 		plot(density(answer$sigma_aj[,i]),main=c("density plot of exon-level variance",i))
 		}
 	plot(density(answer$sigma_a),main="density plot of sigma_a")
-	plot(density(answer$sigma2),main="density plot of sigma^2")
+	plot(density(answer$sigma_aij2),main="density plot of sigma^2")
     dev.off()
     
 }
@@ -95,3 +159,10 @@ plotdes<-function(length){
 }
 plotdes(J)
 
+
+
+
+
+##################
+## END 
+##################
