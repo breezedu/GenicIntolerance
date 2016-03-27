@@ -123,7 +123,7 @@ control=list(adapt_delta=0.99,max_treedepth=12)
 
 
 
-fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=20000,warmup=19000,chains=4)
+fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=2000,warmup=1900,chains=4)
 
 
 
@@ -132,9 +132,7 @@ fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=20000,warmup=19000,
 ## Print fit and alpha/beta
 ######################################################################################################
 
-print(fitinv, "a")
-
-print(fitinv, "beta")
+print(fitinv, beta)
 
 
 ######################################################################################################
