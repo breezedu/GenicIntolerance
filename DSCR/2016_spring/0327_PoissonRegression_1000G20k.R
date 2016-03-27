@@ -123,7 +123,7 @@ control=list(adapt_delta=0.99,max_treedepth=12)
 
 
 
-fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=2000,warmup=1900,chains=4)
+fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=20000,warmup=19000,chains=4)
 
 
 
@@ -132,7 +132,7 @@ fitinv <- stan(model_code=hiernormalinvg, data=M1_table,iter=2000,warmup=1900,ch
 ## Print fit and alpha/beta
 ######################################################################################################
 
-print(fitinv, "beta")
+print(fitinv)
 
 
 ######################################################################################################
@@ -142,7 +142,7 @@ print(fitinv, "beta")
 
 answer<-extract(fitinv,permuted=TRUE)
 plotdesvar<-function(length){
-	pdf(file = "inverse gamma prior variance density plot.pdf")
+	pdf(file = "0327_20k_inverse_gamma_prior_var_density_plot.pdf")
 	for (i in 1:length){
 		plot(density(answer$sigma_aj[,i]),main=c("density plot of exon-level variance",i))
 		}
@@ -154,7 +154,13 @@ plotdesvar<-function(length){
 }
 plotdesvar(J)
 
+
+
+
+######################################################################################################
 #aij,beta,mu
+######################################################################################################
+
 plotdesint<-function(N){
 	pdf(file = "inverse gamma aij,mu,beta density plot")
 	for (i in 1:N){

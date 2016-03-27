@@ -5,6 +5,6 @@
 #SBATCH -c 12
 #SBATCH --mem-per-cpu=8G
 #SBATCH --nodes=4
-#SBATCH --job-name=0327_1kG100kIteration
+#SBATCH --job-name=0327_1kG20kIteration
 
-R CMD BATCH ./0327_PoissonRegression_1000G100k.R
+R CMD BATCH ./0327_PoissonRegression_1000G20k.R
