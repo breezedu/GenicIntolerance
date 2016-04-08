@@ -5,6 +5,6 @@
 #SBATCH -c 12
 #SBATCH --mem-per-cpu=8G
 #SBATCH --nodes=4
-#SBATCH --job-name=HierUniform
+#SBATCH --job-name=0327HieNorInverse
 
-R CMD BATCH ./0327_NorHierichicalUniformPriorOnSigma.R
+R CMD BATCH ./0327_HierNorInverseGamma.R
