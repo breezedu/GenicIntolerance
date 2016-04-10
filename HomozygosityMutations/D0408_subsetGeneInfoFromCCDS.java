@@ -38,7 +38,7 @@ public class D0408_subsetGeneInfoFromCCDS {
 		
 		
 		//write the first line, the title line to the CCDS_gene_frame_exons.txt file
-		out_Writer.write("Chr" + "\t" + "gene_name" + "\t" + "start" + "\t" + "end" + "\t" + "exon_list" + "\n");
+		out_Writer.write("Chr" + "\t" + "gene_name" + "\t" + "geneStart" + "\t" + "geneEnd" + "\t" + "exon_#" + "\t" + "exonStart" + "\t" + "exonEnd" + "\n");
 		
 		
 		
