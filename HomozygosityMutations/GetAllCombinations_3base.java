@@ -2,7 +2,7 @@ package coursera_java_duke;
 
 import java.util.ArrayList;
 
-/*************
+/************************************************************
  * For a given number, get all possible combinations:
  * i.e. take 3 for example:
  * 
@@ -43,17 +43,17 @@ public class GetAllCombinations_3base {
 		//create a new object of GetAllCombinations_3base()
 		GetAllCombinations_3base comb = new GetAllCombinations_3base();
 		
-		System.out.println("We are going to get all combinations for #4! \n");
+		System.out.println("\n We are going to get all combinations for #n! Here n could be any integer below 2,147,483,647 \n");
 		
 		
-		//call GetAllCombinations_3base.run() method to generate all combinations of 4 positions:
+		//call GetAllCombinations_3base.run() method to generate all combinations of n positions:
 		ArrayList<ArrayList<Integer>> com_of_n = comb.run(5);
 		
 		//print out all combinations;
 		Print_ArrayListOfCombinations(com_of_n);
 		
 		
-	}
+	} //end main() 
 
 	
 	/***********
@@ -83,7 +83,7 @@ public class GetAllCombinations_3base {
 
 
 
-	/*********
+	/*******************************************************
 	 * Pass by a number
 	 * generate all possible combinations
 	 * store those combinations into ArrayLists
@@ -114,8 +114,8 @@ public class GetAllCombinations_3base {
 		
 		if(num == 1) return retAL;
 		
-
-		//call extendArrayList() method to exten current retAL arrayList, add 0, 1, and 2 seperately to each arrayList in it.
+		
+		//call extendArrayList() method to extend current retAL arrayList, add 0, 1, and 2 separately to each arrayList in it.
 		for(int i=1; i<num; i++){
 			
 			retAL = extendArrayList(retAL);
@@ -126,7 +126,7 @@ public class GetAllCombinations_3base {
 	}// end run() method;
 
 
-	/***********
+	/**********************************************************
 	 * passby an exist ArrayList with arrayLists in it;
 	 * 
 	 * create a new ArrayList of ArrayList, get every arrayList from retAL, extend it with 0, 1, and 2, separately
@@ -150,6 +150,7 @@ public class GetAllCombinations_3base {
 			ArrayList<Integer> addOne  = new ArrayList<Integer>(currList);			
 			ArrayList<Integer> addTwo  = new ArrayList<Integer>(currList);
 			
+			//extend current arrayLists with 0, 1, and 2 separately; 
 			addZero.add(0);
 			addOne.add(1);
 			addTwo.add(2);
