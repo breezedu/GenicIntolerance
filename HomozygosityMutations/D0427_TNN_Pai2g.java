@@ -157,12 +157,25 @@ public class D0427_TNN_Pai2g {
 		
 		
 		//get exons for TNN gene from TNN_exons.txt document
+		System.out.println("\n Printout exons informations for TNN gene:");
+		
 		ArrayList<Exon_frame> tnn_exons = Read_Exons_from_TXT("TNN");
+		
+		
+		for(int i=0; i<tnn_exons.size(); i++){
+			Exon_frame currEF = tnn_exons.get(i);
+			
+			System.out.println(currEF.Chr + "\t" + currEF.exon_name + "\t" + currEF.gene_start + "\t" + currEF.gene_end + "\t" + currEF.exon_name + "\t" + currEF.exon_start + "\t" + currEF.exon_end);
+		}
+		
+		System.out.println("\n\n");
 		
 		//get all allele-count reads from ExAC data, 0418_ExAC.gene.chr1.table
 		ArrayList<Allele_Reads> tnn_reads = Get_Allele_Reads(tnn_exons);
 		
 		
+		
+		System.out.println("There are " + tnn_reads.size() + " qualified allele counts.");
 		
 	}//end main();
 
@@ -177,12 +190,86 @@ public class D0427_TNN_Pai2g {
 	 * 
 	 * @param exon_List
 	 * @return
+	 * @throws FileNotFoundException 
 	 */
-	private static ArrayList<Allele_Reads> Get_Allele_Reads(ArrayList<Exon_frame> exon_List) {
+	private static ArrayList<Allele_Reads> Get_Allele_Reads(ArrayList<Exon_frame> exon_List) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		
+		//create an ArrayList to store all allele-counts
+		ArrayList<Allele_Reads> ac_List = new ArrayList<Allele_Reads>();
 		
-		return null;
+		String routine = "D:/PhD/";
+		String file_name = "0418_ExAC.gene.chr1.table";
+		
+		Scanner allele_read = new Scanner(new File(routine + file_name));
+
+		System.out.println(allele_read.nextLine());
+		
+		//get the region for TNN gene
+		// because there are different start/end positions for a single gene in CCDS, due to the transcription variations
+		// here we have to get the minimum gene_start and the maximum gene_end positions through the whole exon_list;
+		int gene_start = exon_List.get(0).gene_start;
+		int gene_end = exon_List.get(0).gene_end;
+		
+		for(int i=0; i<exon_List.size(); i++){
+			
+			if(exon_List.get(i).gene_start < gene_start) 	gene_start = exon_List.get(i).gene_start;
+			
+			if(exon_List.get(i).gene_end > gene_end) 		gene_end = exon_List.get(i).gene_end;
+			
+		}
+		System.out.println("The gene region is: [" + gene_start  + " -> " + gene_end + "] ");
+		
+		
+		//if a read locates inside the regioin of TNN gene, check if it hits any Exon;
+		while(allele_read.hasNextLine()){
+			
+			String currLine = allele_read.nextLine();
+			String[] allele = currLine.split("\t");
+			
+			int position = Integer.parseInt(allele[1]);
+			
+			if( position >= gene_start && position <= gene_end && !allele[3].equals("N/A")){
+				
+				boolean exon_hit = false;
+				
+				for(int i=0; i<exon_List.size(); i++){
+					
+					if(position >= exon_List.get(i).exon_start-50 && position <= exon_List.get(i).exon_end+50){
+						exon_hit = true;
+						System.out.print("Hit: " + position + " near " + exon_List.get(i).exon_name +"\t" + exon_List.get(i).exon_start + "-" + exon_List.get(i).exon_end +"\t");
+					}
+				}
+				
+				
+				
+				if(exon_hit == true){
+					System.out.println(" \t " + currLine);
+					
+					//create new allele-read
+					Allele_Reads currRead = new Allele_Reads();
+					
+					//assign parameters
+					currRead.chr = allele[0];
+					currRead.pos = position;
+					currRead.allele_count = Integer.parseInt(allele[2]);
+					currRead.Poly = allele[3];
+					
+					
+					//put currRead to allele-reads arrayList.
+					
+					ac_List.add(currRead);
+					
+				}//end if exon_hit == true condition
+
+				
+			}//end if(position inside gene region;
+			
+		}//end while loop;
+		
+		
+		allele_read.close();
+		return ac_List;
 	}
 
 }//end everything;
